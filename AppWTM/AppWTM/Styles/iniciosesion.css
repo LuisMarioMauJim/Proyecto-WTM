@@ -1,0 +1,161 @@
+﻿:root {
+    --form-bg: #ddd5dc;
+    --white: #ffffff;
+    --gray-light: #8078a5;
+    --main-color: #8078a5;
+    --main-color-dark: #5f5789;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #c7c8ca;
+    background-size: 400% 400%;
+    overflow-x: hidden;
+}
+
+.contenedor-formularios {
+    background: var(--form-bg);
+    padding: 30px;
+    max-width: 500px;
+    margin: 20px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(100, 153, 185, 0.3);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+    /* Estilo personalizado para la barra de desplazamiento */
+    .contenedor-formularios::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .contenedor-formularios::-webkit-scrollbar-track {
+        background: #ddd5dc;
+        border-radius: 10px;
+    }
+
+    .contenedor-formularios::-webkit-scrollbar-thumb {
+        background-color: #8078a5;
+        border-radius: 10px;
+        border: 2px solid #ddd5dc;
+    }
+
+.contenedor-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    display: flex;
+}
+
+    .contenedor-tabs li {
+        flex: 1;
+    }
+
+        .contenedor-tabs li a {
+            display: block;
+            text-decoration: none;
+            padding: 12px;
+            background: rgba(128, 120, 165, 0.25);
+            color: var(--gray-light);
+            font-size: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+            .contenedor-tabs li a:hover {
+                background: var(--main-color-dark);
+                color: var(--white);
+            }
+
+    .contenedor-tabs .active a {
+        background: var(--main-color);
+        color: var(--white);
+    }
+
+h1 {
+    text-align: center;
+    color: #000000;
+    font-weight: 300;
+    font-size: 24px;
+    margin: 0 0 30px;
+}
+
+.contenedor-input {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-input {
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 10px;
+    background: none;
+    border: 1px solid var(--gray-light);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: #000000;
+    transition: all 0.3s ease;
+}
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--main-color);
+    }
+
+label {
+    position: absolute;
+    transform: translateY(6px);
+    left: 13px;
+    color: rgba(0, 0, 0, 0.5);
+    transition: all 0.25s ease;
+    pointer-events: none;
+    font-size: 16px;
+}
+
+    label.active {
+        transform: translateY(-20px);
+        left: 2px;
+        font-size: 14px;
+    }
+
+.button {
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    background: var(--main-color);
+    color: var(--white);
+    transition: all .3s ease;
+    width: 100%;
+    max-width: 500px;
+}
+
+.ajuste-titulo label {
+    transform: translateY(-8px); /* Ajusta este valor para mover el texto más o menos */
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: var(--main-color-dark);
+}
+
+@media screen and (max-width: 500px) {
+    .contenedor-formularios {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .button {
+        font-size: 1rem;
+    }
+}
+

@@ -1,0 +1,43 @@
+# Archivos de compilación
+bin/
+obj/
+
+# Archivos de usuario de Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Configuración de VS
+.vs/
+
+# Archivos temporales
+*.tmp
+*.log
+
+# Archivos de publicación
+*.Publish.xml
+*.pubxml
+*.pdb
+
+# Paquetes NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Archivos de cache
+*.cache
+*.dbmdl
+
+# Archivos de configuración local
+appsettings.Development.json
+.env
+
+# Archivos de sistema
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archivos generados por Git
+*.orig

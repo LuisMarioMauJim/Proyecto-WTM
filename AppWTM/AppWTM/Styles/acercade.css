@@ -1,0 +1,113 @@
+﻿.main.container {
+    max-width: 1000px;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Estilo para el título principal */
+.page-title {
+    position: relative;
+    color: #2c3e50;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+    .page-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(to right, #74b9ff, #0984e3);
+        border-radius: 2px;
+    }
+
+/* Secciones */
+.section {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
+/* Imagen - Nuevos estilos ajustados */
+.img-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    max-width: 500px; /* Limitamos el ancho máximo */
+    margin: 0 auto; /* Centramos el contenedor */
+}
+
+.img-fluid {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* Altura máxima */
+    object-fit: cover; /* Mantiene la proporción */
+    transition: transform 0.3s ease;
+}
+
+.image-caption {
+    text-align: center;
+    color: #666;
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+/* Resto de estilos */
+h3.text-secondary, h5.text-secondary {
+    color: #2c3e50 !important;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 4px solid #74b9ff;
+}
+
+.lead {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.list-group-item {
+    border: none;
+    background: transparent;
+    padding: 1rem 1.5rem;
+    color: #555;
+    font-size: 1.1rem;
+    position: relative;
+}
+
+    .list-group-item:before {
+        content: '•';
+        color: #74b9ff;
+        font-weight: bold;
+        margin-right: 1rem;
+    }
+
+.asesor-section {
+    background: linear-gradient(135deg, #f6f8fa 0%, #f1f4f6 100%);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #74b9ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .img-container {
+        max-width: 100%;
+    }
+
+    .img-fluid {
+        max-height: 250px;
+    }
+}
