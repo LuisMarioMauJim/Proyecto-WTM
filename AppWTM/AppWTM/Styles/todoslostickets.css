@@ -1,0 +1,16 @@
+﻿.ticket-card {
+    max-width: 280px; /* ajusta a tu gusto */
+    margin: 0.5rem;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+    .ticket-card h5 {
+        font-size: 1rem;
+    }
+/* Para centrar el container de cards */
+.container .ticket-list {
+    display: flex;
+    flex-wrap: wrap;
+}

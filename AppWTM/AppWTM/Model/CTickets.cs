@@ -16,6 +16,12 @@ namespace AppWTM.Presenter
         public int fk_Agente { get; set; }
         public int fk_DepRemitente { get; set; }
         public int fk_DepDestinatario { get; set; }
+        public string EstadoDesc { get; set; }
+        public string PrioridadDesc { get; set; }
+        public string Solicitante { get; set; }
+        public string AgenteNombre { get; set; }
+        public DateTime Fecha { get; set; }
+
 
         public CTickets() 
         {
@@ -28,6 +34,12 @@ namespace AppWTM.Presenter
             fk_DepDestinatario = 0;
             fk_DepRemitente = 0;
             fk_Agente = 0;
+
+            EstadoDesc = "";
+            PrioridadDesc = "";
+            Solicitante = "";
+            AgenteNombre = "";
+            Fecha = DateTime.MinValue;
         }
     }
 }

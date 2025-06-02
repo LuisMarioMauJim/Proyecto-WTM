@@ -156,5 +156,30 @@ namespace AppWTM.Model
             return objManagerBD.UpdateData("spuTickets", parametros);
         }
 
+        public CTickets ObtenerDetalleTicket(int idTicket)
+        {
+            var p = new List<SqlParameter>
+            {
+                new SqlParameter("@opcion",    9),
+                new SqlParameter("@Id_Ticket", idTicket)
+            };
+            var ds = objManagerBD.GetData("spuTickets", p.ToArray());
+            var row = ds.Tables[0].Rows[0];
+
+            return new CTickets
+            {
+                Id_Ticket = row["Id_Ticket"] != DBNull.Value ? (int)row["Id_Ticket"] : 0,
+                Ticket_Titulo = row["Título"]?.ToString(),
+                Tick_Descripcion = row["Descripción"]?.ToString(),
+                fk_Prioridad = row["Prioridad"] != DBNull.Value ? (int)row["Prioridad"] : 0,
+                fkEstado = row["Estado"] != DBNull.Value ? (int)row["Estado"] : 0,
+                Fecha = row["Fecha"] != DBNull.Value ? (DateTime)row["Fecha"] : DateTime.MinValue,
+                Solicitante = row["Solicitante"]?.ToString() ?? "Desconocido",
+                AgenteNombre = row["Agente"]?.ToString() ?? "Sin asignar"
+
+            };
+        }
+
+
     }
 }

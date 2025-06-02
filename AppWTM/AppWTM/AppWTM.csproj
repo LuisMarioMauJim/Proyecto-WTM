@@ -187,6 +187,7 @@
     <Content Include="Styles\editarperfil.css" />
     <Content Include="Styles\iniciosesion.css" />
     <Content Include="Styles\menu.css" />
+    <Content Include="Styles\todoslostickets.css" />
     <Content Include="Tickets.aspx" />
     <Content Include="TodosLosTickets.aspx" />
     <Content Include="ViewSwitcher.ascx" />
