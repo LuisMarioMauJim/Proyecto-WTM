@@ -6,10 +6,20 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="Styles/iniciosesion.css" rel="stylesheet" type="text/css" />
- 
+ <style>
+     body {
+    background-image: url('Img/fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+
+}
+ </style>
     <main>
         <!-- Formularios -->
-        
+        <img src="Img/logo.png" alt="Logo" class="logo-img">
         <div class="contenedor-formularios">
             <!-- Links de los formularios -->
             <ul class="contenedor-tabs">

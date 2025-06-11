@@ -1,19 +1,35 @@
 ﻿:root {
-    --form-bg: #ddd5dc;
+    /* Paleta profesional y elegante en tonos vino */
+    --form-bg: #f8fafc; /* Gris muy claro, limpio */
     --white: #ffffff;
-    --gray-light: #8078a5;
-    --main-color: #8078a5;
-    --main-color-dark: #5f5789;
+    --gray-light: #9ca3af; /* Gris cálido para contraste */
+    --main-color: #7c2d42; /* Vino medio, elegante */
+    --main-color-dark: #5a1f32; /* Vino oscuro, profundo */
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background: #c7c8ca;
-    background-size: 400% 400%;
-    overflow-x: hidden;
+    background-image: url('Img/fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+/* Logo en esquina superior derecha */
+.logo-img {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: auto;
+    z-index: 1000;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+    .logo-img:hover {
+        opacity: 1;
+    }
 
 .contenedor-formularios {
     background: var(--form-bg);
@@ -21,7 +37,7 @@ body {
     max-width: 500px;
     margin: 20px auto;
     border-radius: 4px;
-    box-shadow: 0 4px 10px 4px rgba(100, 153, 185, 0.3);
+    box-shadow: 0 4px 10px 4px rgba(124, 45, 66, 0.15); /* Sombra en tonos vino */
     max-height: 80vh;
     overflow-y: auto;
 }
@@ -32,15 +48,19 @@ body {
     }
 
     .contenedor-formularios::-webkit-scrollbar-track {
-        background: #ddd5dc;
+        background: var(--form-bg);
         border-radius: 10px;
     }
 
     .contenedor-formularios::-webkit-scrollbar-thumb {
-        background-color: #8078a5;
+        background-color: var(--main-color);
         border-radius: 10px;
-        border: 2px solid #ddd5dc;
+        border: 2px solid var(--form-bg);
     }
+
+        .contenedor-formularios::-webkit-scrollbar-thumb:hover {
+            background-color: var(--main-color-dark);
+        }
 
 .contenedor-tabs {
     list-style: none;
@@ -57,7 +77,7 @@ body {
             display: block;
             text-decoration: none;
             padding: 12px;
-            background: rgba(128, 120, 165, 0.25);
+            background: rgba(124, 45, 66, 0.1); /* Fondo en tonos vino */
             color: var(--gray-light);
             font-size: 18px;
             text-align: center;
@@ -77,7 +97,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #000000;
+    color: var(--main-color);
     font-weight: 300;
     font-size: 24px;
     margin: 0 0 30px;
@@ -99,20 +119,20 @@ h1 {
     border-top: none;
     border-left: none;
     border-right: none;
-    color: #000000;
+    color: var(--main-color);
     transition: all 0.3s ease;
 }
 
     .form-input:focus {
         outline: none;
-        border-color: var(--main-color);
+        border-color: var(--main-color-dark);
     }
 
 label {
     position: absolute;
     transform: translateY(6px);
     left: 13px;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--gray-light);
     transition: all 0.25s ease;
     pointer-events: none;
     font-size: 16px;
@@ -122,6 +142,7 @@ label {
         transform: translateY(-20px);
         left: 2px;
         font-size: 14px;
+        color: var(--main-color);
     }
 
 .button {
@@ -139,9 +160,10 @@ label {
 }
 
 .ajuste-titulo label {
-    transform: translateY(-8px); /* Ajusta este valor para mover el texto más o menos */
+    transform: translateY(-8px);
     position: relative;
     transition: all 0.3s ease;
+    color: var(--main-color);
 }
 
 .button:hover {
@@ -157,5 +179,11 @@ label {
     .button {
         font-size: 1rem;
     }
-}
 
+    .logo {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        right: 15px;
+    }
+}
