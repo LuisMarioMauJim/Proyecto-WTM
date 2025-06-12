@@ -54,6 +54,7 @@ namespace AppWTM
                         btnUsuarios.Visible = false;
                         btnAreas.Visible = false;
                         btnUsuarios.Visible=false;
+                        btnEstadisticas.Visible = false;
                     }
 
                     if (rol != 2)
@@ -94,6 +95,11 @@ namespace AppWTM
         protected void btnTicketsArea_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/TodosLosTickets.aspx");
+        }
+
+        protected void btnEstadisticas_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Estadistica.aspx");
         }
     }
 }
