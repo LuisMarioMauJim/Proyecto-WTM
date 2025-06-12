@@ -22,6 +22,8 @@ namespace AppWTM.Presenter
         public string AgenteNombre { get; set; }
         public DateTime Fecha { get; set; }
 
+        public int Tick_Calificacion { get; set; }
+
 
         public CTickets() 
         {

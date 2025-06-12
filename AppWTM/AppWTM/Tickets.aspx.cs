@@ -2,10 +2,13 @@
 using AppWTM.Presenter;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace AppWTM
@@ -175,23 +178,52 @@ namespace AppWTM
         }
         protected void rptTickets_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                // Encuentra el DropDownList dentro del item del Repeater
-                DropDownList ddlDepartTicket = (DropDownList)e.Item.FindControl("ddlDepartTicket");
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
+                return;
 
-                if (ddlDepartTicket != null)
+            var drv = (DataRowView)e.Item.DataItem;
+            int ticketId = Convert.ToInt32(drv["Id_Ticket"]);
+            string estado = drv["Estado"].ToString();
+
+            // Panel de calificación
+            var pnl = (Panel)e.Item.FindControl("calificacionEstrellas");
+            pnl.Visible = estado.Equals("Resuelto", StringComparison.OrdinalIgnoreCase);
+
+            // Leemos la calificación existente
+            int calif = objTicket.ObtenerCalificacion(ticketId);
+
+            // La guardamos en el HiddenField para el postback
+            var hf = (HiddenField)e.Item.FindControl("hfCalificacion");
+            hf.Value = calif.ToString();
+
+            // Ahora, en lugar de inyectar data-rating y confiar en JS,
+            // marcamos las estrellas directamente aquí:
+            var starsContainer = (HtmlGenericControl)e.Item.FindControl("starsContainer");
+            if (starsContainer != null && calif > 0)
+            {
+                // Recorremos los <span class="star"> dentro de starsContainer
+                foreach (Control c in starsContainer.Controls)
                 {
-                    // Llena el DropDownList con los datos que necesitas
-                    DataSet ds = objTicket.listarDepartamentos();
-                    ddlDepartTicket.DataSource = ds;
-                    ddlDepartTicket.DataValueField = "Id_Departamento";
-                    ddlDepartTicket.DataTextField = "Dep_Nombre";
-                    ddlDepartTicket.DataBind();
-                    ddlDepartTicket.Items.Insert(0, new ListItem("Seleccione...", "0"));
+                    if (c is HtmlGenericControl star && star.Attributes["data-value"] != null)
+                    {
+                        if (int.TryParse(star.Attributes["data-value"], out int v) && v <= calif)
+                        {
+                            // agregamos la clase 'selected'
+                            string @class = star.Attributes["class"] ?? "";
+                            if (!@class.Contains("selected"))
+                                star.Attributes["class"] = @class + " selected";
+                        }
+                    }
                 }
             }
+
+            // Si ya estaba calificado, ocultamos completamente el botón
+            var btn = (Button)e.Item.FindControl("btnGuardarCalificacion");
+            if (calif > 0)
+                btn.Visible = false;
         }
+
+
 
 
         protected void btnCancelarTicket_Click(object sender, EventArgs e)
@@ -212,6 +244,56 @@ namespace AppWTM
                 ScriptManager.RegisterStartupScript(this, GetType(), "SweetAlertError", "Swal.fire('Error', 'No se pudo cancelar el ticket.', 'error');", true);
             }
         }
+
+        protected void btnGuardarCalificacion_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            RepeaterItem item = (RepeaterItem)btn.NamingContainer;
+
+            HiddenField hfTicket = (HiddenField)item.FindControl("HiddenField1");
+            HiddenField hfCalificacion = (HiddenField)item.FindControl("hfCalificacion");
+
+            string ticketId = hfTicket?.Value;
+            string calificacion = hfCalificacion?.Value;
+
+            if (string.IsNullOrEmpty(ticketId))
+            {
+                // Aquí se genera la alerta
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "Swal.fire('Error', 'No se pudo identificar el ticket.', 'error');", true);
+                return;
+            }
+
+            // 3) Obtenemos la calificación de hfCalificacion
+            var hfCal = (HiddenField)item.FindControl("hfCalificacion");
+            if (hfCal == null || !int.TryParse(hfCal.Value, out int calif) || calif < 1)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(),
+                    "noRating", "Swal.fire('Atención','Debes seleccionar al menos una estrella.','warning');", true);
+                return;
+            }
+
+            // 4) Guardamos en BD
+            if (objTicket.GuardarCalificacion(Convert.ToInt32(ticketId), calif))
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(),
+                  "gracias", "Swal.fire('¡Gracias!','Calificación registrada.','success');", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(),
+                  "err", "Swal.fire('Error','Algo falló al guardar.','error');", true);
+            }
+        }
+
+
+        protected string GetStarClass(object dataItem, int starValue)
+        {
+            // dataItem viene de Eval("Tick_Calificacion")
+            int cal = 0;
+            int.TryParse(dataItem?.ToString(), out cal);
+            return cal >= starValue ? "star selected" : "star";
+        }
+
 
 
         protected string GetCircleClass(string estado)

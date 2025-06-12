@@ -175,10 +175,36 @@ namespace AppWTM.Model
                 fkEstado = row["Estado"] != DBNull.Value ? (int)row["Estado"] : 0,
                 Fecha = row["Fecha"] != DBNull.Value ? (DateTime)row["Fecha"] : DateTime.MinValue,
                 Solicitante = row["Solicitante"]?.ToString() ?? "Desconocido",
-                AgenteNombre = row["Agente"]?.ToString() ?? "Sin asignar"
-
+                AgenteNombre = row["Agente"]?.ToString() ?? "Sin asignar",
+                fk_Agente = (int)row["AgenteId"]
             };
         }
+
+        public bool GuardarCalificacion(int ticketId, int calificacion)
+        {
+            var p = new List<SqlParameter>{
+              new SqlParameter("@opcion", 10),                // define nueva opción en tu SP
+              new SqlParameter("@Id_Ticket", ticketId),
+              new SqlParameter("@Tick_calificacion", calificacion)
+            };
+            return objManagerBD.UpdateData("spuTickets", p.ToArray());
+        }
+
+        public int ObtenerCalificacion(int idTicket)
+        {
+            var p = new List<SqlParameter> {
+                new SqlParameter("@opcion", 11),
+                new SqlParameter("@Id_Ticket", idTicket)
+            };
+            var ds = objManagerBD.GetData("spuTickets", p.ToArray());
+            if (ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0]["Tick_Calificacion"] != DBNull.Value)
+                return Convert.ToInt32(ds.Tables[0].Rows[0]["Tick_Calificacion"]);
+            return 0;
+        }
+
+
+
+
 
 
     }

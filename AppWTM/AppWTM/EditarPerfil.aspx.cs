@@ -46,7 +46,7 @@ namespace AppWTM
             txtTelefono.Text = cUsuario.telefono.ToString();
             drpEstado.SelectedValue = cUsuario.status.ToString();
             drpArea.SelectedIndex = cUsuario.fkArea;
-            drpRol.SelectedIndex = cUsuario.fkRol;
+            //drpRol.SelectedIndex = cUsuario.fkRol;
             //txtPassword.Text = cUsuario.password.ToString();
             //mostrar contraseña
         }
@@ -108,7 +108,7 @@ namespace AppWTM
             cUsuario.telefono = txtTelefono.Text;
             cUsuario.fkArea = int.Parse(drpArea.SelectedValue);
             cUsuario.status = drpEstado.SelectedValue;
-            cUsuario.fkRol = drpRol.SelectedIndex;
+            //cUsuario.fkRol = drpRol.SelectedIndex;
 
             // 4) Llama a la capa de datos
             if (wUsuario.UpdateUsuario(cUsuario))

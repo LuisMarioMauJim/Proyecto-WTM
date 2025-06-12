@@ -83,6 +83,7 @@ namespace AppWTM
                 btnEnviar.Visible = false;
                 txtPassword.Visible = false;
                 lblPassword.Visible = false;
+                drpEstado.Visible = true;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "setTimeout(AbrirModal, 0);", true);
             }
         }
@@ -91,8 +92,8 @@ namespace AppWTM
         {
             e.Row.Cells[2].Visible = false;
             e.Row.Cells[7].Visible = false;
-            e.Row.Cells[9].Visible = false;
-            e.Row.Cells[11].Visible = false;
+            e.Row.Cells[10].Visible = false;
+            //e.Row.Cells[11].Visible = false;
 
             //Pr
 
@@ -127,7 +128,7 @@ namespace AppWTM
                     PasswordHash = hash,
                     Salt = salt,
                     fkArea = Convert.ToInt32(drpArea.SelectedValue),
-                    status = drpEstado.SelectedValue,
+                    status = "Activo",
                     fkRol = Convert.ToInt32(drpRol.SelectedIndex)
                 };
 
@@ -178,6 +179,7 @@ namespace AppWTM
             lblRegistrar.Visible = true;
             txtPassword.Visible = true;
             lblPassword.Visible = true;
+            drpEstado.Visible= false;
         }
 
         protected void btnRegModal_Click(object sender, EventArgs e)
@@ -189,6 +191,7 @@ namespace AppWTM
             lblRegistrar.Visible = true;
             lblPassword.Visible = true;
             txtPassword.Visible = true;
+            drpEstado.Visible = false;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "setTimeout(AbrirModal, 0);", true);
         }
 

@@ -31,6 +31,17 @@
     background-color: #17a2b8;
     border-color: #138496;
 }
+   
+    .star {
+        font-size: 2rem;
+        color: #ccc;
+        cursor: pointer;
+    }
+    .star.selected{
+        color: gold;
+    }
+
+
 
 .status-cancelado {
     background-color: #dc3545;
@@ -82,6 +93,7 @@
 
                     <!-- Modal -->
                     <div class="modal fade" id="ticketModal_<%# Eval("Id_Ticket") %>" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+                        <asp:HiddenField ID="hfTicketID" runat="server" />
                         <div class="modal-dialog" style="max-width: 50%;">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary text-white">
@@ -98,43 +110,52 @@
                                                 <p><b>Área:</b> <%# Eval("Departamento") %></p>
                                                 <p><b>Descripción:</b> <%# Eval("Descripción") %></p>
                                                 <p><b>Responsable:</b> <%# Eval("Agente") %></p>
+                                                    <asp:Panel ID="calificacionEstrellas" runat="server" CssClass="mt-3">
+                                                         <label class="form-label">Califica el servicio del agente:</label>
+                                                                <div id="starsContainer" class="stars text-center mb-3">
+                                                                    <span class='<%# GetStarClass(Eval("Tick_Calificacion"), 1) %>' data-value="1">&#9733;</span>
+                                                                    <span class='<%# GetStarClass(Eval("Tick_Calificacion"), 2) %>' data-value="2">&#9733;</span>
+                                                                    <span class='<%# GetStarClass(Eval("Tick_Calificacion"), 3) %>' data-value="3">&#9733;</span>
+                                                                    <span class='<%# GetStarClass(Eval("Tick_Calificacion"), 4) %>' data-value="4">&#9733;</span>
+                                                                    <span class='<%# GetStarClass(Eval("Tick_Calificacion"), 5) %>' data-value="5">&#9733;</span>
+                                                                </div>
 
-<%--                                                <!-- Estado Dropdown -->
-                                                <div class="mt-3" ID="SelectEstado" Visible="false">
-                                                    <label for="ddlEstado_<%# Eval("Id_Ticket") %>" class="form-label">Estado</label>
-                                                    <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" style="width: 100%;">
-                                                        <asp:ListItem Text="Selecciona un Estado" Value="0" />
-                                                        <asp:ListItem Text="Activo" Value="1" />
-                                                        <asp:ListItem Text="Pendiente" Value="2" />
-                                                        <asp:ListItem Text="Resuelto" Value="3" />
-                                                        <asp:ListItem Text="Cancelado" Value="4" />
-                                                        <asp:ListItem Text="En Proceso" Value="5" />
-                                                    </asp:DropDownList>
-                                                </div>
+                                                                  <!-- HiddenFields para ID y calificación -->
+                                                            <asp:HiddenField 
+                                                                ID="HiddenField1" 
+                                                                runat="server"
+                                                                Value='<%# Eval("Id_Ticket") %>' />
+                                                            <asp:HiddenField 
+                                                                ID="hfCalificacion" 
+                                                                runat="server" />
 
-                                                <!-- Agente Dropdown -->
-                                                <div class="mt-3" ID="SelectDepartamento" Visible="false">
-                                                    <label for="ddlDepartTicket_<%# Eval("Id_Ticket") %>" class="form-label">Departamento</label>
-                                                    <asp:DropDownList ID="ddlDepartTicket" runat="server" CssClass="form-select" style="width: 100%;"></asp:DropDownList>
-                                                    
-                                                </div>--%>
+
+                                                            <!-- Botón que dispara el postback y llamará a btnGuardarCalificacion_Click -->
+                                                            <asp:Button
+                                                                ID="btnGuardarCalificacion"
+                                                                runat="server"
+                                                                Text="Guardar Calificación"
+                                                                CssClass="btn btn-success"
+                                                                OnClick="btnGuardarCalificacion_Click" />
+                                                        </asp:Panel>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer d-flex justify-content-center">
-                                <asp:Button 
-                                    ID="btnCancelarTicket" 
-                                    runat="server" 
-                                    Text="Cancelar Ticket" 
-                                    CssClass="btn btn-danger btn-sm"
-                                    OnClick="btnCancelarTicket_Click" 
-                                    CommandArgument='<%# Eval("Id_Ticket") %>' />
-                                <%--<asp:Button ID="BtnActualizar" runat="server" Text="Actualizar" CssClass="btn btn-warning mx-2" Visible="false" OnClick="BtnActualizar_Click"/>
-                                --%>    <div class="form-check form-switch" >
+                                    <div id="botonCancelacion" class="mt-3 <%# Eval("Estado").ToString() != "Resuelto" ? "" : "d-none" %>">
+                                        <asp:Button 
+                                            ID="btnCancelarTicket" 
+                                            runat="server" 
+                                            Text="Cancelar Ticket" 
+                                            CssClass="btn btn-danger btn-sm"
+                                            OnClick="btnCancelarTicket_Click" 
+                                            CommandArgument='<%# Eval("Id_Ticket") %>' />
+                                    </div>
+                                 <div class="form-check form-switch" >
                                         <asp:CheckBox ID="SwitchSeleccionarTicket" runat="server" CssClass="form-check-input" Visible ="false" />
-                                        <label class="form-check-label" for="SwitchSeleccionarTicket">Seleccionar Ticket</label>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +244,106 @@
             </div>
         </div>
     </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>s
+<script>
+        function abrirModalDetalles(ticket) {
+            document.getElementById("detalleId").textContent = ticket.id;
+            document.getElementById("detalleEstado").textContent = ticket.estado;
+            document.getElementById("detalleDescripcion").textContent = ticket.descripcion;
+
+            // Mostrar calificación solo si el ticket está resuelto
+            if (ticket.estado === "Resuelto") {
+                document.getElementById("calificacionEstrellas").style.display = "block";
+            } else {
+                document.getElementById("calificacionEstrellas").style.display = "none";
+            }
+
+            let modal = new bootstrap.Modal(document.getElementById("modalDetalles"));
+            modal.show();
+
+            document.querySelectorAll('[id^="ticketModal_"]').forEach(modalEl => {
+                modalEl.addEventListener('shown.bs.modal', function () {
+                    const $modal = this;
+                    // 1) lee la calificación del atributo data-rating (inyectado en server-side)
+                    const rating = parseInt($modal.querySelector('[id*="starsContainer"]').getAttribute('data-rating') || "0");
+                    if (rating > 0) {
+                        // 2) pinta esas estrellas
+                        const stars = $modal.querySelectorAll('.star');
+                        stars.forEach(s => {
+                            if (parseInt(s.dataset.value) <= rating) s.classList.add('selected');
+                        });
+                    }
+                });
+            });
+        }
+</script>
+<script>
+    // Cada vez que el usuario hace click en una estrella...
+    $(document).on('click', '.star', function () {
+        var val = $(this).data('value'),
+            $modal = $(this).closest('.modal-content');
+
+        // 1) Pinto las estrellas
+        $modal.find('.star').each(function () {
+            $(this).toggleClass('selected', $(this).data('value') <= val);
+        });
+
+        // 2) Guardo la calificación en el HiddenField de ESTA fila
+        $modal.find('input[id$="hfCalificacion"]').val(val);
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll("#rating-stars .star");
+        const selectedRatingInput = document.getElementById("selectedRating");
+
+        stars.forEach(star => {
+            star.addEventListener("click", () => {
+                const value = star.getAttribute("data-value");
+
+                // Guardar el valor seleccionado
+                selectedRatingInput.value = value;
+
+                // Quitar selección previa
+                stars.forEach(s => s.classList.remove("selected"));
+
+                // Agregar selección actual
+                for (let i = 0; i < value; i++) {
+                    stars[i].classList.add("selected");
+                }
+            });
+        });
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".stars").forEach(function (starGroup) {
+                const stars = starGroup.querySelectorAll(".star");
+
+                stars.forEach(function (star) {
+                    star.addEventListener("click", function () {
+                        const value = this.getAttribute("data-value");
+                        const parent = this.closest(".stars");
+
+                        // Limpiar selección previa
+                        parent.querySelectorAll(".star").forEach(s => s.classList.remove("selected"));
+
+                        // Marcar estrellas hasta la seleccionada
+                        for (let i = 0; i < value; i++) {
+                            parent.querySelectorAll(".star")[i].classList.add("selected");
+                        }
+
+                        // Buscar el hiddenField que está justo después del grupo de estrellas
+                        const hf = parent.parentElement.querySelector("input[id*='hfCalificacion']");
+                        if (hf) {
+                            hf.value = value;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </asp:Content>
