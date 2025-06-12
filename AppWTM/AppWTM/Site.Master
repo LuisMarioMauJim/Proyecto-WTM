@@ -213,8 +213,10 @@ footer {
                         <div class="tooltip">Calendario</div>
                     </div>
                     <div class="menu-item">
-                        <i class="bi bi-graph-up"></i>
-                        <div class="tooltip">Estadisticas</div>
+                        <asp:LinkButton ID="btnEstadisticas" runat="server" OnClick="btnEstadisticas_Click">
+                            <i class="bi bi-graph-up"></i>
+                            <div class="tooltip">Estadisticas</div>
+                        </asp:LinkButton>
                     </div>
                     <div class="menu-item">
                         <asp:LinkButton ID="btnUsuarios" runat="server" OnClick="btnUsuarios_Click">
