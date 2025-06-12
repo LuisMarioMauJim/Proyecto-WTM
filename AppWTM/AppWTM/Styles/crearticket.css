@@ -1,0 +1,602 @@
+﻿:root {
+    --primary-blue: #0f1d60;
+    --primary-purple: #801250;
+    --white: #ffffff;
+    --accent-yellow: #fec526;
+    --light-gray: #f8f9fa;
+    --border-gray: #e9ecef;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+    --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --border-radius: 12px;
+    --border-radius-small: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset y base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+/* Switch personalizado mejorado */
+.form-switch .form-check-input {
+    width: 44px;
+    height: 24px;
+    background-color: #dee2e6;
+    border-radius: 24px;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .form-switch .form-check-input:checked {
+        background-color: var(--primary-blue);
+        box-shadow: inset 0 2px 4px rgba(15, 29, 96, 0.3);
+    }
+
+    .form-switch .form-check-input:before {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        top: 3px;
+        left: 3px;
+        background-color: white;
+        border-radius: 50%;
+        transition: var(--transition);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-switch .form-check-input:checked:before {
+        transform: translateX(20px);
+    }
+
+/* Contenedor principal */
+.container {
+    background-color: var(--white);
+    padding: 2rem;
+}
+
+/* Botón principal mejorado */
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-yellow) 0%, #f4b942 100%);
+    border: none;
+    color: var(--primary-blue);
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+    box-shadow: var(--shadow-light);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #f4b942 0%, var(--accent-yellow) 100%);
+        color: var(--primary-blue);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(254, 197, 38, 0.4);
+    }
+
+    .btn-primary:active {
+        transform: translateY(-1px) scale(1.01);
+    }
+
+    .btn-primary:focus {
+        box-shadow: 0 0 0 0.2rem rgba(254, 197, 38, 0.5);
+    }
+
+/* Tarjetas de tickets mejoradas */
+.ticket-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--border-radius);
+    padding: 0;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-light);
+    max-width: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .ticket-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+        transform: scaleX(0);
+        transition: var(--transition);
+    }
+
+    .ticket-card:hover {
+        border-color: var(--primary-purple);
+        box-shadow: var(--shadow-heavy);
+        transform: translateY(-5px);
+    }
+
+        .ticket-card:hover::before {
+            transform: scaleX(1);
+        }
+
+    .ticket-card .card-header {
+        background: linear-gradient(135deg, var(--light-gray) 0%, #f1f3f4 100%);
+        border-bottom: 1px solid var(--border-gray);
+        padding: 24px 20px;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+        /* Círculo del ID mejorado */
+        .ticket-card .card-header .rounded-circle {
+            background-color: var(--primary-blue) !important;
+            color: var(--white) !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 2px 8px rgba(15, 29, 96, 0.3);
+            transition: var(--transition);
+        }
+
+    .ticket-card:hover .card-header .rounded-circle {
+        background-color: var(--primary-blue) !important;
+        color: var(--white) !important;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(15, 29, 96, 0.4);
+    }
+
+    .ticket-card .card-body {
+        padding: 24px 20px;
+    }
+
+        .ticket-card .card-body h5 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .ticket-card .card-body p {
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .ticket-card .card-body small {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+/* Badges mejorados */
+.badge {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: var(--shadow-light);
+    border: none;
+}
+
+/* Badges de prioridad */
+.bg-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+    color: white !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, var(--accent-yellow) 0%, #f4b942 100%) !important;
+    color: var(--primary-blue) !important;
+}
+
+.bg-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+    color: white !important;
+}
+
+/* Badges de estado */
+.bg-success {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%) !important;
+    color: white !important;
+}
+
+.bg-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
+    color: white !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #1a2980 100%) !important;
+    color: white !important;
+}
+
+/* Estadísticas mejoradas */
+#divEstadisticas {
+    margin-top: 50px;
+    padding: 40px;
+    background: linear-gradient(135deg, var(--light-gray) 0%, #f1f3f4 100%);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-gray);
+    box-shadow: var(--shadow-light);
+}
+
+    #divEstadisticas h2 {
+        color: var(--primary-blue);
+        font-weight: 700;
+        margin-bottom: 35px;
+        text-align: center;
+        font-size: 2rem;
+        position: relative;
+    }
+
+        #divEstadisticas h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-yellow), var(--primary-purple));
+            border-radius: 2px;
+        }
+
+.stats-card {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--border-radius);
+    padding: 30px 25px;
+    text-align: center;
+    transition: var(--transition);
+    background-color: var(--white);
+    min-width: 160px;
+    box-shadow: var(--shadow-light);
+    position: relative;
+    overflow: hidden;
+}
+
+    .stats-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: currentColor;
+        opacity: 0.8;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: var(--shadow-heavy);
+    }
+
+    .stats-card .state {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.9;
+    }
+
+    .stats-card .count {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        line-height: 1;
+    }
+
+    /* Colores de tarjetas de estadísticas */
+    .stats-card.pendiente {
+        background: linear-gradient(135deg, var(--accent-yellow) 0%, #f4b942 100%);
+        color: var(--primary-blue);
+        border-color: var(--accent-yellow);
+    }
+
+    .stats-card.en-progreso {
+        background: linear-gradient(135deg, var(--primary-purple) 0%, #a01560 100%);
+        color: var(--white);
+        border-color: var(--primary-purple);
+    }
+
+    .stats-card.resuelto {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        color: var(--white);
+        border-color: #28a745;
+    }
+
+    .stats-card.cancelado {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: var(--white);
+        border-color: #dc3545;
+    }
+
+    .stats-card.activo {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, #1a2980 100%);
+        color: var(--white);
+        border-color: var(--primary-blue);
+    }
+
+/* Modales mejorados */
+.modal-content {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #1a2980 100%);
+    color: var(--white);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: 25px 35px;
+    border-bottom: none;
+}
+
+    .modal-header .modal-title {
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
+    .modal-header .btn-close {
+        filter: invert(1);
+        opacity: 0.8;
+    }
+
+.modal-body {
+    padding: 35px;
+    background-color: var(--white);
+}
+
+    .modal-body .card {
+        border: 1px solid var(--border-gray);
+        border-radius: var(--border-radius-small);
+        box-shadow: var(--shadow-light);
+    }
+
+    .modal-body .card-body {
+        padding: 30px;
+    }
+
+        .modal-body .card-body h6 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        .modal-body .card-body p {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+.modal-footer {
+    padding: 25px 35px;
+    background: linear-gradient(135deg, var(--light-gray) 0%, #f1f3f4 100%);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border-top: 1px solid var(--border-gray);
+}
+
+/* Formulario de crear ticket mejorado */
+.card-header h4 {
+    color: var(--primary-blue);
+    font-weight: 700;
+    margin-bottom: 0;
+    font-size: 1.4rem;
+}
+
+.form-label {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.form-control, .form-select {
+    border: 2px solid var(--border-gray);
+    border-radius: var(--border-radius-small);
+    padding: 14px 18px;
+    transition: var(--transition);
+    font-size: 0.95rem;
+    background-color: var(--white);
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-purple);
+        box-shadow: 0 0 0 0.25rem rgba(128, 18, 80, 0.15);
+        background-color: var(--white);
+    }
+
+.form-text {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+/* Botones secundarios mejorados */
+.btn-secondary {
+    background: linear-gradient(135deg, var(--text-muted) 0%, #5a6268 100%);
+    border: none;
+    color: var(--white);
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+    box-shadow: var(--shadow-light);
+}
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #5a6268 0%, var(--text-muted) 100%);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+    }
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+    color: var(--white);
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+    box-shadow: var(--shadow-light);
+}
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #c82333 0%, #dc3545 100%);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+    }
+
+/* Card footer mejorado */
+.card-footer {
+    background: linear-gradient(135deg, var(--light-gray) 0%, #f1f3f4 100%);
+    border-top: 1px solid var(--border-gray);
+    padding: 25px;
+    border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
+}
+
+/* Animaciones adicionales */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ticket-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.stats-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive mejorado */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .ticket-card {
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .stats-card {
+        min-width: 140px;
+        padding: 25px 20px;
+        margin-bottom: 1rem;
+    }
+
+    .modal-dialog {
+        max-width: 95% !important;
+        margin: 1rem auto;
+    }
+
+    .modal-body,
+    .modal-header,
+    .modal-footer {
+        padding: 20px;
+    }
+
+    #divEstadisticas {
+        padding: 25px;
+        margin-top: 30px;
+    }
+
+        #divEstadisticas h2 {
+            font-size: 1.6rem;
+        }
+}
+
+@media (max-width: 576px) {
+    .btn-primary {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+
+    .stats-card .count {
+        font-size: 2.2rem;
+    }
+
+    .ticket-card .card-header,
+    .ticket-card .card-body {
+        padding: 20px 16px;
+    }
+}
+
+/* Estados de carga */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+}
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid var(--primary-blue);
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+.estado-activo {
+    background-color: #0f1d60 !important;
+    color: #ffffff !important;
+}
+
+.estado-pendiente {
+    background-color: #fec526 !important;
+    color: #0f1d60 !important;
+}
+
+.estado-resuelto {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+.estado-cancelado {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+.estado-en-proceso {
+    background-color: #801250 !important;
+    color: #ffffff !important;
+}
+
+
+@keyframes spin {
+    to {
+        transform: rotate(360px);
+    }
+}

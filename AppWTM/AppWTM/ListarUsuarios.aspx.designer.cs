@@ -30,7 +30,7 @@ namespace AppWTM
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected global::System.Web.UI.WebControls.LinkButton btnSearch;
 
         /// <summary>
         /// Control btnCancelar.
@@ -42,15 +42,6 @@ namespace AppWTM
         protected global::System.Web.UI.WebControls.Button btnCancelar;
 
         /// <summary>
-        /// Control btnRegModal2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnRegModal2;
-
-        /// <summary>
         /// Control btnCancelarFiltro.
         /// </summary>
         /// <remarks>
@@ -58,6 +49,15 @@ namespace AppWTM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelarFiltro;
+
+        /// <summary>
+        /// Control btnRegModal2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnRegModal2;
 
         /// <summary>
         /// Control grdListUsuarios.

@@ -5,78 +5,52 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        .myCheckBoxList {
-            -moz-column-count: 2;      /* Firefox */
-            -webkit-column-count: 2;   /* Safari/Chrome */
-            column-count: 2;           /* Estándar */
-            column-gap: 1rem;          /* Espacio entre columnas */
-            column-fill: auto;         /* Llenado automático */
-        }
-
-        /* Cada elemento de la lista se renderiza como <span> */
-        .myCheckBoxList span {
-            display: inline-flex;                   /* Para alinear checkbox y texto */
-            align-items: center;
-            margin-bottom: 0.5rem;
-            break-inside: avoid;                    /* Evita que el ítem se parta entre columnas */
-            -webkit-column-break-inside: avoid;
-            -moz-column-break-inside: avoid;
-            white-space: normal;                    /* Permite que el texto salte de línea */
-        }
-
-        /* Espacio entre el checkbox y el texto */
-        .myCheckBoxList input[type="checkbox"] {
-            margin-right: 8px;
-        }
-
-        #modalFiltroAreas .modal-dialog {
-            min-width: 400px; /* Ajusta según tus necesidades */
-        }
-
-        .tableCheckBoxList table {
-            border-collapse: separate !important;
-            border-spacing: 2rem 0.5rem !important;
-        }
-
-        .btn-check:checked + .btn {
-        background-color: #007bff;
-        color: white;
-        }
-        .btn-check + .btn {
-            border: 1px solid #007bff;
-            color: #007bff;
-            padding: 8px 16px;
-            cursor: pointer;
-            display: inline-block;
-            text-align: center;
-        }
-    </style>
+     <link href="Styles/usuarios.css" rel="stylesheet" type="text/css" />
     <main aria-labelledby="Gestion de usuarios">
-        <h2 id="titulo"><%: Title %></h2>
-        <hr />
-        <!-- Este si es el bueno -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control" placeholder="Buscar usuario..."></asp:TextBox>
-                    <asp:Button ID="btnSearch" runat="server" CssClass="btn btn-primary" Text="Buscar" onclick="btnSearch_Click" UseSubmitBehavior="false"/>
-                    <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-danger" Text="X" Visible="false" onClick="btnCancelar_Click" UseSubmitBehavior="false"/>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <asp:LinkButton ID="btnRegModal2" runat="server" OnClick="btnRegModal_Click" UseSubmitBehavior="false">
-                        <i class="bi bi-plus-circle"></i>
-                        <div class="tooltip">Gestionar usuarios</div>
-                    </asp:LinkButton>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-info ms-2" data-bs-toggle="modal" data-bs-target="#modalFiltroAreas">
-                        <i class="bi bi-funnel"></i> Filtrar
-                    </button>
-                    <asp:Button ID="btnCancelarFiltro" runat="server" CssClass="btn btn-danger" Text="X" Visible="false" onClick="btnCancelarFiltro_Click" UseSubmitBehavior="false"/>
-                </div>
+    <!-- Header en una sola línea -->
+    <div class="header-container">
+        <!-- Título a la izquierda -->
+        <h1 class="profile-title">Gestionar Usuarios</h1>
+        
+        <!-- Búsqueda en el centro -->
+        <div class="search-center">
+            <div class="search-input-group">
+                <asp:TextBox ID="txtSearch" runat="server" 
+                    CssClass="search-input" placeholder="Buscar usuarios...">
+                </asp:TextBox>
+                <asp:LinkButton ID="btnSearch" runat="server"
+                    CssClass="btn-search"
+                    OnClick="btnSearch_Click"
+                    UseSubmitBehavior="false"
+                    ToolTip="Buscar">
+                    <i class="bi bi-search"></i>
+                </asp:LinkButton>
+
+                <asp:Button ID="btnCancelar" runat="server" 
+                    CssClass="btn-cancel-search" Text="✕" Visible="false" 
+                    onClick="btnCancelar_Click" UseSubmitBehavior="false"/>
             </div>
         </div>
+        
+        <!-- Acciones a la derecha -->
+        <div class="actions-container">
+            <button type="button" class="btn-filter" data-bs-toggle="modal" data-bs-target="#modalFiltroAreas">
+                <i class="bi bi-funnel"></i>
+                Filtrar
+            </button>
+            
+            <asp:Button ID="btnCancelarFiltro" runat="server" 
+                CssClass="btn-cancel-filter" Text="✕" Visible="false" 
+                onClick="btnCancelarFiltro_Click" UseSubmitBehavior="false"/>
+            
+            <asp:LinkButton ID="btnRegModal2" runat="server" OnClick="btnRegModal_Click" 
+                UseSubmitBehavior="false" CssClass="btn-add">
+                <i class="bi bi-plus"></i>
+                Agregar
+            </asp:LinkButton>
+        </div>
+    </div>
+
 
         <div class="container">
             <ContentTemplate>
@@ -121,54 +95,57 @@
                         <asp:PlaceHolder runat="server">
                             <asp:ValidationSummary ID="ValidationSummary1" CssClass="text-danger" runat="server" HeaderText="Errores:" />
                             <div class="container profile-container px-4 pb-4">
-                                <div class="mb-3">
-                                    <label for="Nombre" class="form-label">Nombre(s)</label>
-                                    <asp:TextBox ID="txtNombre" CssClass="form-control w-100" runat="server" required placeholder="Nombre(s)"></asp:TextBox>
-                                </div>
+                               <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Nombre" class="form-label">Nombre(s)</label>
+                                <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" required placeholder="Nombre(s)" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Apellidos" class="form-label">Apellidos</label>
+                                <asp:TextBox ID="txtApellidos" CssClass="form-control" runat="server" required placeholder="Apellidos" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="CorreoElectronico" class="form-label">Correo Electrónico</label>
+                                <asp:TextBox ID="txtEmail" CssClass="form-control" runat="server" TextMode="Email" required placeholder="Correo Electrónico" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Area" class="form-label">Área</label>
+                                <asp:DropDownList ID="drpArea" runat="server" CssClass="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ContactNumber" class="form-label">Número de Contacto</label>
+                                <asp:TextBox ID="txtTelefono" CssClass="form-control" runat="server" required placeholder="Número de Contacto" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label id="lblPassword" runat="server" for="Password" class="form-label">Contraseña</label>
+                                <asp:TextBox ID="txtPassword" CssClass="form-control" runat="server" TextMode="Password" required placeholder="Contraseña" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Estado" class="form-label">Estado</label>
+                                <asp:DropDownList ID="drpEstado" runat="server" CssClass="form-control">
+                                    <asp:ListItem Text="Seleccione un estado" Value="0" Selected="True" />
+                                    <asp:ListItem Text="Activo" />
+                                    <asp:ListItem Text="Inactivo" />
+                                </asp:DropDownList>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="drpRol" class="form-label">Rol</label>
+                                <asp:DropDownList ID="drpRol" runat="server" CssClass="form-control">
+                                    <asp:ListItem Text="Selecciona un rol" Value="0" Selected="True" />
+                                    <asp:ListItem Text="Usuario" />
+                                    <asp:ListItem Text="Agente" />
+                                    <asp:ListItem Text="Administrador" />
+                                    <asp:ListItem Text="Asignador de tickets" />
+                                </asp:DropDownList>
+                            </div>
+                        </div>
 
-                                <div class="mb-3">
-                                    <label for="Apellidos" class="form-label">Apellidos</label>
-                                    <asp:TextBox ID="txtApellidos" CssClass="form-control w-100" runat="server" required placeholder="Apellidos"></asp:TextBox>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="CorreoElectronico" class="form-label">Correo Electrónico</label>
-                                    <asp:TextBox ID="txtEmail" CssClass="form-control w-100" runat="server" TextMode="Email" required placeholder="Correo Electrónico"></asp:TextBox>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Area" class="form-label">Área</label>
-                                    <asp:DropDownList ID="drpArea" runat="server" CssClass="form-control">
-                                    </asp:DropDownList>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ContactNumber" class="form-label">Número de Contacto</label>
-                                    <asp:TextBox ID="txtTelefono" CssClass="form-control w-100" runat="server" required placeholder="Número de Contacto"></asp:TextBox>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label id="lblPassword" runat="server" for="Password" class="form-label">Contraseña</label>
-                                    <asp:TextBox ID="txtPassword" CssClass="form-control w-100" runat="server" TextMode="Password" required placeholder="Contraseña"></asp:TextBox>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Estado" class="form-label">Estado</label>
-                                    <asp:DropDownList ID="drpEstado" runat="server" CssClass="form-control">
-                                        <asp:ListItem Text="Seleccione un estado" Value="0" Selected="True"></asp:ListItem>
-                                        <asp:ListItem Text="Activo"></asp:ListItem>
-                                        <asp:ListItem Text="Inactivo"></asp:ListItem>
-                                    </asp:DropDownList>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="drpRol" class="form-label">Rol</label>
-                                    <asp:DropDownList ID="drpRol" runat="server" CssClass="form-control">
-                                        <asp:ListItem Text="Selecciona un rol" Value="0" Selected="True"></asp:ListItem>
-                                        <asp:ListItem Text="Usuario"></asp:ListItem>
-                                        <asp:ListItem Text="Agente"></asp:ListItem>
-                                        <asp:ListItem Text="Administrador"></asp:ListItem>
-                                        <asp:ListItem Text="Asignador de tickets"></asp:ListItem>
-                                    </asp:DropDownList>
-                                </div>
                                 <div class="button-container mt-4">
                                     <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-danger" data-bs-dismiss="modal" Text="Cancelar"/>
                                     <asp:Button ID="btnEnviar" runat="server" CssClass="btn btn-primary" Text="Registrar" OnClick="btnRegistrar_Click"/>

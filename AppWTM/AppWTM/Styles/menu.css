@@ -24,7 +24,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    border-right: 2px solid #e0e0e0;
+    border-right: 2px solid #801250;
     padding-top: 20px;
     padding-bottom: 20px;
     z-index: 1000;
@@ -73,7 +73,7 @@ body {
 
     .menu-item .bi {
         font-size: 25px;
-        color: #000000;
+        color: #ffffff;
     }
 
     .menu-item:hover {
@@ -124,6 +124,13 @@ body {
         height: 40px;
         border-radius: 50%;
         cursor: pointer;
+        border: 2px solid #ffffff;
+    }
+
+    .profile .bi {
+        font-size: 25px;
+        color: #ffffff;
+        cursor: pointer;
     }
 
 .dropdown-menu {
@@ -161,5 +168,3 @@ footer {
     border-top: 1px solid #e0e0e0;
     text-align: center;
 }
-
-

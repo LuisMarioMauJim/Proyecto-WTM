@@ -3,161 +3,82 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<style>
-    .form-switch .form-check-input {
-    width: 40px;
-    height: 20px;
-    background-color: #ccc;
-    border-radius: 20px;
-    position: relative;
-    transition: background-color 0.3s;
-    cursor: pointer;
-    }
+<link href="Styles/crearticket.css" rel="stylesheet" type="text/css" />
+    <style>
+        /* SOLUCIÓN: Indicadores de estado circulares */
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    border: 2px solid transparent;
+    transition: var(--transition);
+}
 
-    .form-switch .form-check-input:checked {
-        background-color: #28a745;
-    }
+/* Colores específicos para cada estado */
+.status-activo {
+    background-color: #28a745;
+    border-color: #1e7e34;
+}
 
-    .form-switch .form-check-input:before {
-        content: '';
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        top: 2px;
-        left: 2px;
-        background-color: white;
-        border-radius: 50%;
-        transition: transform 0.3s;
-    }
+.status-pendiente {
+    background-color: var(--accent-yellow);
+    border-color: #e0a800;
+}
 
-    .form-switch .form-check-input:checked:before {
-        transform: translateX(20px);
-    }
+.status-resuelto {
+    background-color: #17a2b8;
+    border-color: #138496;
+}
 
-    #divEstadisticas {
-        margin-top: 20px;
-    }
+.status-cancelado {
+    background-color: #dc3545;
+    border-color: #c82333;
+}
 
-    .stats-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 15px;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .stats-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .stats-card .state {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .stats-card .count {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    /* Colores personalizados para diferentes estados */
-    .stats-card.pendiente {
-        background-color: #f9c74f;
-    }
-
-    .stats-card.en-progreso {
-        background-color: #43aa8b;
-        color: #fff;
-    }
-
-    .stats-card.resuelto {
-        background-color: #577590;
-        color: #fff;
-    }
-
-    .stats-card.cancelado {
-        background-color: #f94144;
-        color: #fff;
-    }
-    .stats-card.activo {
-        background-color: #90be6d;
-        color: #fff;
-    }
-    .card-header div {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .card-body h3 {
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .card-body h5 {
-        color: #555;
-        font-weight: bold;
-    }
-
-    .card-body .badge {
-        font-size: 0.9rem;
-        padding: 0.5em 0.8em;
-        margin-bottom: 5px; /* Separación del borde inferior */
-    }
-
-    /* Ajustar ancho de las tarjetas */
-    .ticket-card {
-        max-width: 600px; /* Hacerlas más compactas */
-    }
-
-    /* Efecto hover */
-        .ticket-card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
-            transform: translateY(-5px); /* Elevación */
-            transition: all 0.3s ease; /* Suavidad del efecto */
-        }
-</style>
-
-
+.status-en-proceso {
+    background-color: var(--primary-purple);
+    border-color: #6a0e42;
+}
+    </style>
 
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8">
 
             <asp:Repeater ID="rptTickets" runat="server" OnItemDataBound="rptTickets_ItemDataBound">
-                <ItemTemplate>
-                    <div class="ticket-card d-flex mb-3 border rounded" data-bs-toggle="modal" data-bs-target="#ticketModal_<%# Eval("Id_Ticket") %>">
-                        <!-- Encabezado con ID del ticket -->
-                        <header class="card-header d-flex flex-column align-items-center" style="width: 80px;">
-                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-1" style="width: 60px; height: 60px;">
-                                <span class="fw-bold text-dark"><%# Eval("Id_Ticket") %></span>
-                            </div>
-                        </header>
+    <ItemTemplate>
+        <div class="ticket-card d-flex mb-3 border rounded" data-bs-toggle="modal" data-bs-target="#ticketModal_<%# Eval("Id_Ticket") %>">
+            <!-- Encabezado con ID del ticket -->
+            <header class="card-header d-flex flex-column align-items-center" style="width: 80px;">
+                <div class="rounded-circle d-flex align-items-center justify-content-center mb-1 <%# GetCircleClass(Eval("Estado").ToString()) %>" style="width: 60px; height: 60px;">
+                    <span class="fw-bold"><%# Eval("Id_Ticket") %></span>
+                </div>
+            </header>
 
-                        <!-- Cuerpo de la tarjeta -->
-                        <div class="card-body">
-                            <h5 class="card-text"><%# Eval("Título") %></h5>
-                            <p class="card-text">Área: <%# Eval("Departamento") %></p>
-                            <div class="d-flex justify-content-start">
-                                <!-- Badge de Prioridad -->
-                                <span class='badge <%# GetBadgeClass(Eval("Prioridad").ToString(), "prioridad") %> me-2'>
-                                    <%# Eval("Prioridad") %>
-                                </span>
-                                <!-- Badge de Estado -->
-                                <span class='badge <%# GetBadgeClass(Eval("Estado").ToString(), "estado") %>'>
-                                    <%# Eval("Estado") %>
-                                </span>
-                            </div>
-                            <div class="mt-2">
-                              <small class="text-muted">
-                                Responsable: <%# Eval("Agente") %>
-                              </small>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Cuerpo de la tarjeta -->
+            <div class="card-body">
+                <h5 class="card-text"><%# Eval("Título") %></h5>
+                <p class="card-text">Área: <%# Eval("Departamento") %></p>
+                <div class="d-flex justify-content-start">
+                    <!-- Badge de Prioridad -->
+                    <span class='badge <%# GetBadgeClass(Eval("Prioridad").ToString(), "prioridad") %> me-2'>
+                        <%# Eval("Prioridad") %>
+                    </span>
+                    <!-- Badge de Estado -->
+                   <span class='badge <%# GetBadgeClass(Eval("Estado").ToString(), "estado") %>'>
+                        <%# Eval("Estado") %>
+                    </span>
+                        
+                </div>
+                <div class="mt-2">
+                  <small class="text-muted">
+                    Responsable: <%# Eval("Agente") %>
+                  </small>
+                </div>
+            </div>
+        </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="ticketModal_<%# Eval("Id_Ticket") %>" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">

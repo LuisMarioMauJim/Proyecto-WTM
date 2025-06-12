@@ -45,7 +45,8 @@ namespace AppWTM
                 ddlArea.DataBind();
                 ddlArea.Items.Insert(0, new ListItem("Seleccione...", "0"));
 
-            };
+            }
+            ;
         }
 
         private void listarTickets()
@@ -75,11 +76,28 @@ namespace AppWTM
         {
             if (type == "prioridad")
             {
-                return value == "Alta" ? "bg-danger" : value == "Media" ? "bg-warning" : "bg-success";
+                return value == "Alta" ? "bg-danger" : value == "Media" ? "bg-warning" : "bg-info";
             }
             else if (type == "estado")
             {
-                return value == "Abierto" ? "bg-primary" : value == "Pendiente" ? "bg-secondary" : "bg-dark";
+                switch (value?.ToLower().Trim())
+                {
+                    case "activo":
+                        return "bg-success"; // Verde
+                    case "abierto":
+                        return "bg-success"; // Verde (por si usas ambos)
+                    case "pendiente":
+                        return "bg-warning"; // Amarillo
+                    case "resuelto":
+                        return "bg-info"; // Azul
+                    case "cancelado":
+                        return "bg-danger"; // Rojo
+                    case "en proceso":
+                    case "en-proceso":
+                        return "bg-primary"; // Azul oscuro/Morado
+                    default:
+                        return "bg-secondary"; // Gris por defecto
+                }
             }
             return "bg-light";
         }
@@ -105,7 +123,7 @@ namespace AppWTM
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
-            if(Session["UsuarioLog"] != null)
+            if (Session["UsuarioLog"] != null)
             {
                 CUsuario usuario = (CUsuario)Session["UsuarioLog"];
                 CTickets ticket = new CTickets
@@ -123,8 +141,9 @@ namespace AppWTM
                     listarTickets();
                     ScriptManager.RegisterStartupScript(this, GetType(), "TicketEnviado", "Swal.fire({ title: 'Ticket Enviado', text: 'Tu solicitud ha sido enviada exitosamente', icon: 'success', confirmButtonText: 'Aceptar' });", true);
                 }
-            };
-            
+            }
+            ;
+
         }
 
 
@@ -195,7 +214,30 @@ namespace AppWTM
         }
 
 
+        protected string GetCircleClass(string estado)
+        {
+            if (string.IsNullOrEmpty(estado))
+                return "estado-activo"; // Valor por defecto
 
+            switch (estado.ToLower().Trim())
+            {
+                case "activo":
+                    return "estado-activo";
+                case "pendiente":
+                    return "estado-pendiente";
+                case "resuelto":
+                    return "estado-resuelto";
+                case "cancelado":
+                    return "estado-cancelado";
+                case "en proceso":
+                case "en-proceso":
+                    return "estado-en-proceso";
+                default:
+                    return "estado-activo"; // Valor por defecto
+            }
+        }
+
+      
 
     }
 }

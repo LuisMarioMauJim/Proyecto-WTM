@@ -1,0 +1,886 @@
+﻿
+/* ===== ESTILOS DE TABLA ÚNICAMENTE ===== */
+/* Fuente formal para toda la tabla */
+.table {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Contenedor de la tabla */
+.table-container {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Tabla base */
+.table {
+    margin-bottom: 0;
+    background: white;
+}
+
+    /* Encabezado de la tabla - SOLO TÍTULOS EN NEGRITA */
+    .table thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+        .table thead th {
+            font-weight: 700; /* Negrita solo para títulos */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem; /* Tamaño profesional */
+            padding: 1.25rem 1rem;
+            border: none;
+        }
+
+    /* Filas del cuerpo de la tabla */
+    .table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+        .table tbody tr:hover {
+            background-color: #f8fafc;
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Celdas del cuerpo - TEXTO NORMAL (no negrita) */
+    .table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+        border: none;
+        font-weight: 400; /* Peso normal, no negrita */
+        color: #374151; /* Color gris profesional */
+        font-size: 0.9rem; /* Tamaño legible y profesional */
+    }
+
+/* Iconos de acciones */
+.action-icons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+    .action-icons .bi {
+        font-size: 1.125rem;
+        padding: 8px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+/* Icono de editar */
+.bi-pencil-fill {
+    color: #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+    .bi-pencil-fill:hover {
+        background-color: rgba(16, 185, 129, 0.2);
+        transform: scale(1.1);
+    }
+
+/* Icono de eliminar */
+.bi-trash-fill {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+    .bi-trash-fill:hover {
+        background-color: rgba(239, 68, 68, 0.2);
+        transform: scale(1.1);
+    }
+
+/* Mejora adicional para el hover de filas */
+.table-hover tbody tr:hover {
+    background-color: #f8fafc !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Animaciones de entrada para las filas */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table tbody tr {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+    .table tbody tr:nth-child(even) {
+        animation-delay: 0.1s;
+    }
+
+    .table tbody tr:nth-child(odd) {
+        animation-delay: 0.2s;
+    }
+
+/* Responsivo para la tabla */
+@media (max-width: 768px) {
+    .table-responsive {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .table thead th {
+        padding: 1rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .table tbody td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .action-icons .bi {
+        font-size: 1rem;
+        padding: 6px;
+    }
+}
+
+.myCheckBoxList {
+    -moz-column-count: 2; /* Firefox */
+    -webkit-column-count: 2; /* Safari/Chrome */
+    column-count: 2; /* Estándar */
+    column-gap: 1rem; /* Espacio entre columnas */
+    column-fill: auto; /* Llenado automático */
+}
+
+    /* Cada elemento de la lista se renderiza como <span> */
+    .myCheckBoxList span {
+        display: inline-flex; /* Para alinear checkbox y texto */
+        align-items: center;
+        margin-bottom: 0.5rem;
+        break-inside: avoid; /* Evita que el ítem se parta entre columnas */
+        -webkit-column-break-inside: avoid;
+        -moz-column-break-inside: avoid;
+        white-space: normal; /* Permite que el texto salte de línea */
+    }
+
+    /* Espacio entre el checkbox y el texto */
+    .myCheckBoxList input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+#modalFiltroAreas .modal-dialog {
+    min-width: 400px; /* Ajusta según tus necesidades */
+}
+
+.tableCheckBoxList table {
+    border-collapse: separate !important;
+    border-spacing: 2rem 0.5rem !important;
+}
+
+.btn-check:checked + .btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-check + .btn {
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+}
+
+/* ===== HEADER PRINCIPAL MEJORADO - UNA SOLA LÍNEA ===== */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding: 1.5rem 2rem;
+    background: transparent;
+    border-radius: 16px;
+    box-shadow: none;
+    border: none;
+}
+
+/* Título mejorado */
+.profile-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 4px solid #0f1d60;
+    flex-shrink: 0;
+}
+
+/* Contenedor central con búsqueda */
+.search-center {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 2rem;
+}
+
+/* Contenedor de acciones del lado derecho */
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+/* ===== BÚSQUEDA EN EL CENTRO ===== */
+.search-center {
+    position: relative;
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    min-width: 400px;
+}
+
+/* Input de búsqueda mejorado */
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    outline: none;
+    color: #374151;
+}
+
+    .search-input::placeholder {
+        color: #9ca3af;
+    }
+
+/* Icono de búsqueda */
+.search-icon {
+    padding: 0.75rem 1rem;
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    .search-icon:hover {
+        color: #8b5cf6;
+    }
+
+/* ===== BOTONES DE ACCIÓN MEJORADOS ===== */
+
+/* Botón Buscar */
+.btn-search {
+    padding: 0.75rem 1.25rem;
+    background: #fec526;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .btn-search:hover {
+        background: #fec526;
+        transform: translateY(-1px);
+        color: white;
+    }
+
+/* Botón Cancelar Búsqueda */
+.btn-cancel-search {
+    padding: 0.75rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+    .btn-cancel-search:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+/* Botón Filtrar */
+.btn-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: white;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .btn-filter:hover {
+        border-color: #fec526;
+        color: #fec526;
+        background: #faf5ff;
+    }
+
+    .btn-filter i {
+        font-size: 1rem;
+    }
+
+/* Botón Cancelar Filtro */
+.btn-cancel-filter {
+    padding: 0.75rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+    .btn-cancel-filter:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+/* Botón Agregar */
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #fec526;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+    .btn-add:hover {
+        background: #fec526;
+        color: white;
+        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-add i {
+        font-size: 1rem;
+    }
+
+/* ===== TOOLTIPS MEJORADOS ===== */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+    .tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: #1f2937;
+    }
+
+.tooltip-container:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1024px) {
+    .search-center {
+        margin: 0 1rem;
+    }
+
+    .search-input-group {
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .search-center {
+        margin: 0;
+        width: 100%;
+    }
+
+    .search-input-group {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .actions-container {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .profile-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-add,
+    .btn-filter {
+        padding: 0.625rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ===== DISEÑO DE MODALES MEJORADO ===== */
+
+/* Overlay del modal */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+}
+
+/* Estilo del modal general */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalSlideIn 0.4s ease-out;
+    overflow: hidden;
+}
+
+/* Animación de entrada del modal */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Encabezado del modal */
+.modal-header {
+    padding: 0.75rem 1.5rem; /* ALTURA REDUCIDA */
+    background: linear-gradient(135deg, #0f1d60 0%, #1e3a8a 100%);
+    color: #ffffff;
+    border-bottom: none;
+    position: relative;
+    overflow: hidden;
+}
+
+
+    /* Efecto de brillo en el header */
+    .modal-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s;
+    }
+
+    .modal-header:hover::before {
+        left: 100%;
+    }
+
+    .modal-header .modal-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        letter-spacing: 0.5px;
+    }
+
+    /* Botón de cierre mejorado */
+    .modal-header .btn-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff !important;
+        opacity: 0.9;
+        padding: 0.5rem;
+        margin: 0;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+        .modal-header .btn-close:before {
+            content: '×';
+            font-size: 1.8rem;
+            line-height: 1;
+            color: #ffffff;
+        }
+
+        .modal-header .btn-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .modal-header .btn-close:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+            outline: none;
+        }
+
+/* Cuerpo del modal */
+.modal-body {
+    padding: 2.5rem;
+    color: #374151;
+    font-size: 0.95rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    line-height: 1.6;
+}
+
+    /* Estilos para formularios dentro del modal */
+    .modal-body .form-label {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .modal-body .form-control {
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #ffffff;
+    }
+
+        .modal-body .form-control:focus {
+            border-color: #fec526;
+            box-shadow: 0 0 0 0.2rem rgba(254, 197, 38, 0.25);
+            background-color: #ffffff;
+        }
+
+        .modal-body .form-control:hover {
+            border-color: #d1d5db;
+        }
+
+    .modal-body .mb-3 {
+        margin-bottom: 1.5rem;
+    }
+
+/* Contenedor de botones mejorado */
+.button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Pie del modal */
+.modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+    /* Botones del modal mejorados */
+    .modal-footer .btn,
+    .button-container .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Botón primario */
+    .modal-footer .btn-primary,
+    .button-container .btn-primary {
+        background: linear-gradient(135deg, #fec526 0%, #f59e0b 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(254, 197, 38, 0.3);
+    }
+
+        .modal-footer .btn-primary:hover,
+        .button-container .btn-primary:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(254, 197, 38, 0.4);
+        }
+
+    /* Botón secundario */
+    .modal-footer .btn-secondary,
+    .button-container .btn-secondary {
+        background: linear-gradient(135deg, #801250 0%, #6b0f3d 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(128, 18, 80, 0.3);
+    }
+
+        .modal-footer .btn-secondary:hover,
+        .button-container .btn-secondary:hover {
+            background: linear-gradient(135deg, #6b0f3d 0%, #5a0d33 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(128, 18, 80, 0.4);
+        }
+
+    /* Botón danger */
+    .modal-footer .btn-danger,
+    .button-container .btn-danger {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+        .modal-footer .btn-danger:hover,
+        .button-container .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+/* Estilos para checkboxes en modales */
+.modal-body .tableCheckBoxList {
+    margin: 1rem 0;
+}
+
+    .modal-body .tableCheckBoxList table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 1rem 0.75rem;
+    }
+
+    .modal-body .tableCheckBoxList td {
+        padding: 0.5rem;
+        vertical-align: top;
+    }
+
+    .modal-body .tableCheckBoxList input[type="checkbox"] {
+        margin-right: 0.5rem;
+        transform: scale(1.2);
+        accent-color: #fec526;
+    }
+
+    .modal-body .tableCheckBoxList label {
+        font-weight: 500;
+        color: #374151;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+        .modal-body .tableCheckBoxList label:hover {
+            color: #fec526;
+        }
+
+/* Estilos para el grupo de botones de roles */
+.modal-body .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+    .modal-body .btn-group .btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .modal-body .btn-group .btn-check:checked + .btn {
+        background: linear-gradient(135deg, #fec526 0%, #f59e0b 100%);
+        color: #ffffff;
+        border-color: #fec526;
+        box-shadow: 0 2px 8px rgba(254, 197, 38, 0.3);
+        transform: scale(1.05);
+    }
+
+    .modal-body .btn-group .btn-check + .btn {
+        background-color: #ffffff;
+        border: 2px solid #e5e7eb;
+        color: #6b7280;
+    }
+
+        .modal-body .btn-group .btn-check + .btn:hover {
+            border-color: #fec526;
+            color: #fec526;
+            background-color: #fef3c7;
+        }
+
+/* Mensajes de validación */
+.modal-body .text-danger {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #dc2626;
+    font-size: 0.9rem;
+}
+
+    .modal-body .text-danger ul {
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+
+/* Responsivo para modales */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 1rem;
+    }
+
+    .modal-header {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-footer {
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
+
+        .modal-footer .btn,
+        .button-container .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+    .modal-body .btn-group {
+        flex-direction: column;
+    }
+
+        .modal-body .btn-group .btn {
+            min-width: auto;
+            width: 100%;
+        }
+}
+
+/* Mejoras adicionales de accesibilidad */
+.modal-header .btn-close:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.modal-body .form-control:focus-visible {
+    outline: 2px solid #fec526;
+    outline-offset: 2px;
+}
+
+/* Animación de carga para el contenido del modal */
+.modal-body > * {
+    animation: fadeInContent 0.6s ease-out;
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

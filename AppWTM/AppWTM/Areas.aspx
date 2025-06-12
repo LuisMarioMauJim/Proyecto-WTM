@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
     <link href="Styles/areas.css" rel="stylesheet" type="text/css" />
+   
        <main aria-labelledby="Gestion de areas">        
     <div class="header-container">
     <h1 class="profile-title">Gestión de areas</h1>
@@ -14,7 +15,7 @@
          <div class="row mb-3">
          <div class="col text-start"> <!-- Cambiado de text-end a text-start -->
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAreaModal">
-            <i class="bi bi-plus"></i> Agregar Área
+            <i class="bi bi-plus"></i> Agregar
         </button>
     </div>
 </div>
@@ -29,15 +30,17 @@
                                             <h5 class="card-title">Área: <%# Eval("Area") %></h5>
                                             <p class="card-text">Prioridad: <%# Eval("Prioridad") %></p>
                                             <div class="d-flex gap-2">
-                                            <button type="button" class="btn btn-edit" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0;" 
-                                                data-bs-toggle="modal" data-bs-target="#editModal" 
-                                                onclick="event.preventDefault(); editArea('<%# Eval("ID") %>', '<%# Eval("Area") %>', '<%# Eval("Prioridad") %>')">
-                                               <i class="bi bi-pencil-square"></i> 
-                                            </button>
-                                            <button type="button" class="btn btn-danger" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0;" 
-                                                onclick="event.preventDefault(); deleteArea('<%# Eval("ID") %>')">
-                                              <i class="bi bi-trash"></i>  
-                                            </button>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-edit" 
+                                                    data-bs-toggle="modal" data-bs-target="#editModal" 
+                                                    onclick="event.preventDefault(); editArea('<%# Eval("ID") %>', '<%# Eval("Area") %>', '<%# Eval("Prioridad") %>')">
+                                                   <i class="bi bi-pencil-square"></i> 
+                                                </button>
+                                                <button type="button" class="btn btn-danger" 
+                                                    onclick="event.preventDefault(); deleteArea('<%# Eval("ID") %>')">
+                                                  <i class="bi bi-trash"></i>  
+                                                </button>
+                                            </div>
                                         </div>
                                         </div>
                                     </div>

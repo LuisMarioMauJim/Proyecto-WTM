@@ -183,10 +183,12 @@
     <Content Include="Site.Master" />
     <Content Include="Styles\acercade.css" />
     <Content Include="Styles\areas.css" />
+    <Content Include="Styles\crearticket.css" />
     <Content Include="Styles\editarperfil.css" />
     <Content Include="Styles\iniciosesion.css" />
     <Content Include="Styles\menu.css" />
     <Content Include="Styles\todoslostickets.css" />
+    <Content Include="Styles\usuarios.css" />
     <Content Include="Tickets.aspx" />
     <Content Include="TodosLosTickets.aspx" />
     <Content Include="ViewSwitcher.ascx" />
