@@ -2,6 +2,7 @@
 using AppWTM.Presenter;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -69,10 +70,11 @@ namespace AppWTM
             rptAsignadosMi.DataSource = asignadosMi.Length == 0 ? null : asignadosMi.CopyToDataTable();
             rptAsignadosMi.DataBind();
 
-            // 4) Pendientes     → Where EstadoId = 1   (según tu tabla: 1=Activo, 2=Pendiente, etc.)
+            //activos
+
             var activos = tabla.Select("EstadoId = 1");
-            rptPendientes.DataSource = activos.Length == 0 ? null : activos.CopyToDataTable();
-            rptPendientes.DataBind();
+            rptActivos.DataSource = activos.Length == 0 ? null : activos.CopyToDataTable();
+            rptActivos.DataBind();
 
             // 4) Pendientes     → Where EstadoId = 2   (según tu tabla: 1=Activo, 2=Pendiente, etc.)
             var pendientes = tabla.Select("EstadoId = 2");
@@ -235,22 +237,22 @@ namespace AppWTM
                 int calif = ticket.Tick_Calificacion;
                 hfCalificacion.Value = calif.ToString();
 
-                // Pintar las estrellas
-                for (int i = 1; i <= 5; i++)
+
+                var sb = new System.Text.StringBuilder();
+                for (int i = 1; i <= calif; i++)
                 {
-                    // Encuentra el span por su ID dinámico
-                    var star = (HtmlGenericControl)ticketDetalleModal
-                                   .FindControl("starsContainer")
-                                   .FindControl("star" + i);
-                    if (star != null)
-                    {
-                        // Ajusta la clase según corresponda
-                        if (i <= calif)
-                            star.Attributes["class"] = "star selected";
-                        else
-                            star.Attributes["class"] = "star";
-                    }
+                    // Si i está dentro de la calificación, uso clase "selected"
+                    string css = i <= calif ? "star selected" : "star";
+                    sb.Append($"<span class=\"{css}\" title=\"{i} de 5\">&#9733;</span>");
                 }
+                litStars.Text = sb.ToString();
+
+                // Mostramos el panel sólo si está resuelto
+                calificacionEstrellas.Visible =
+                    ticket.fkEstado.ToString().Equals("3", StringComparison.OrdinalIgnoreCase);
+
+                // Mostrar el panel solo si está resuelto
+                calificacionEstrellas.Visible = (calif > 0);
 
                 // Mostrar el panel de las estrellas sólo si está Resuelto
                 calificacionEstrellas.Visible = ticket.fkEstado.ToString()

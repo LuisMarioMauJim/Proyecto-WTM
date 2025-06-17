@@ -8,7 +8,7 @@
     <style>
         .star {
           font-size: 2rem;        /* tamaño grande */
-          color: #ccc;            /* gris por defecto */
+          color: gold;            /* gris por defecto */
           cursor: pointer;
           transition: color .2s;
         }
@@ -252,21 +252,31 @@
         <div class="tab-pane fade" id="tab-activos">
             <asp:Repeater ID="rptActivos" runat="server" OnItemDataBound="rptTicketsArea_ItemDataBound" OnItemCommand="rptTicketsArea_ItemCommand">
                 <ItemTemplate>
-                    <!-- Asegúrate de copiar aquí la misma tarjeta de ticket que usas en otros Repeaters -->
-                    <div id="ticketContainer" runat="server" class="card my-2">
-                        <div class="card-body">
-                            <h5 class="card-title"><%# Eval("Ticket_Titulo") %></h5>
-                            <p class="card-text"><%# Eval("Tick_Descripcion") %></p>
-
-                            <!-- Botón para ver detalles -->
-                            <asp:LinkButton ID="lnkVerDetalle7" runat="server" CommandName="VerDetalle" CommandArgument='<%# Eval("Id_Ticket") %>' CssClass="btn btn-primary">
-                                Ver detalle
-                            </asp:LinkButton>
-
-                            <!-- Botón para asignar (opcional) -->
-                            <asp:Button ID="btnAsignar7" runat="server" CommandName="Asignar" CommandArgument='<%# Eval("Id_Ticket") %>' CssClass="btn btn-warning" Text="Asignarme" />
+                  <div id="ticketContainer" runat="server"  class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <asp:LinkButton ID="lnkVerDetalle4"
+                                    runat="server"
+                                    CssClass="card h-100 text-start text-decoration-none text-dark mb-2"
+                                    CommandName="VerDetalle"
+                                    CommandArgument='<%# Eval("Id_Ticket") %>'>
+                      <div class="card-body">
+                        <h5 class="card-title"><%# Eval("Título") %></h5>
+                        <p class="card-text mb-1"><%# Eval("Descripción") %></p>
+                        <div class="mb-2">
+                          <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
+                          <span class="badge bg-secondary"><%# Eval("Estado") %></span>
                         </div>
-                    </div>
+                        <small class="text-muted">
+                          #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
+                        </small><br/>
+                        <small class="text-muted">
+                          Solicitante: <%# Eval("Usuario") %>
+                        </small><br/>
+                        <small class="text-muted">
+                          Agente: <%# Eval("Agente") %>
+                        </small>
+                      </div>
+                    </asp:LinkButton>
+                  </div>
                 </ItemTemplate>
             </asp:Repeater>
         </div>
@@ -414,17 +424,14 @@
           </dl>
         </div>
           <asp:Panel ID="calificacionEstrellas" runat="server" CssClass="mt-3">
-          <div id="starsContainer" runat="server" class="stars text-center mb-3">
-            <span id="star1" runat="server" class="star">&#9733;</span>
-            <span id="star2" runat="server" class="star">&#9733;</span>
-            <span id="star3" runat="server" class="star">&#9733;</span>
-            <span id="star4" runat="server" class="star">&#9733;</span>
-            <span id="star5" runat="server" class="star">&#9733;</span>
-          </div>
-          <!-- HiddenField para capturar en el postback si el usuario cambia la calificación -->
-          <asp:HiddenField ID="hfCalificacion" runat="server" />
-        </asp:Panel>
+              <label class="form-label">Califica el servicio del agente:</label>
+              <div class="stars text-center mb-3">
+                <asp:Literal ID="litStars" runat="server" />
+              </div>
+            </asp:Panel>
 
+          
+              <asp:HiddenField ID="hfCalificacion" runat="server" />
         <div class="modal-footer">
           <asp:Button ID="btnCambiarEstado"
                       runat="server"
@@ -441,7 +448,7 @@
   </div>
     <asp:ScriptManagerProxy runat="server" ID="ScriptManagerProxy1" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
+<%--<script>
     function abrirModalDetalles(ticket) {
         document.getElementById("detalleId").textContent = ticket.id;
         document.getElementById("detalleEstado").textContent = ticket.estado;
@@ -454,25 +461,21 @@
             document.getElementById("calificacionEstrellas").style.display = "none";
         }
 
-        let modal = new bootstrap.Modal(document.getElementById("modalDetalles"));
-        modal.show();
+        //let modal = new bootstrap.Modal(document.getElementById("modalDetalles"));
+        //modal.show();
 
-        document.querySelectorAll('[id^="ticketModal_"]').forEach(modalEl => {
-            modalEl.addEventListener('shown.bs.modal', function () {
-                const $modal = this;
-                // 1) lee la calificación del atributo data-rating (inyectado en server-side)
-                const rating = parseInt($modal.querySelector('[id*="starsContainer"]').getAttribute('data-rating') || "0");
-                if (rating > 0) {
-                    // 2) pinta esas estrellas
-                    const stars = $modal.querySelectorAll('.star');
-                    stars.forEach(s => {
-                        if (parseInt(s.dataset.value) <= rating) s.classList.add('selected');
-                    });
-                }
-            });
-        });
+        //let starsCont = document.querySelector('[id$="starsContainer"]');
+        //if (starsCont) {
+        //    const rating = parseInt(starsCont.getAttribute('data-rating') || "0");
+        //    starsCont.querySelectorAll('.star').forEach(s => {
+        //        const val = parseInt(s.dataset.value, 10);
+        //        if (val <= rating) s.classList.add('selected');
+        //        else s.classList.remove('selected');
+        //    });
+        //}
     }
-</script>
+</script>--%>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </asp:Content>

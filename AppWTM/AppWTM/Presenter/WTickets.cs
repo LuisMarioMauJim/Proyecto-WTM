@@ -176,7 +176,8 @@ namespace AppWTM.Model
                 Fecha = row["Fecha"] != DBNull.Value ? (DateTime)row["Fecha"] : DateTime.MinValue,
                 Solicitante = row["Solicitante"]?.ToString() ?? "Desconocido",
                 AgenteNombre = row["Agente"]?.ToString() ?? "Sin asignar",
-                fk_Agente = (int)row["AgenteId"]
+                fk_Agente = (int)row["AgenteId"],
+                Tick_Calificacion = (int)row["Calif"]
             };
         }
 
