@@ -11,80 +11,26 @@ namespace AppWTM
 {
 
 
-    public partial class Estadistica
+    public partial class Home
     {
 
         /// <summary>
-        /// Control ScriptManagerProxy1.
+        /// Control litBienvenida.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManagerProxy ScriptManagerProxy1;
+        protected global::System.Web.UI.WebControls.Literal litBienvenida;
 
         /// <summary>
-        /// Control currentTimeRange.
+        /// Control divTotalTickets.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl currentTimeRange;
-
-        /// <summary>
-        /// Control btnToday.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnToday;
-
-        /// <summary>
-        /// Control btnThisWeek.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnThisWeek;
-
-        /// <summary>
-        /// Control btnThisMonth.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnThisMonth;
-
-        /// <summary>
-        /// Control btnThisYear.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnThisYear;
-
-        /// <summary>
-        /// Control lnkExportPDF.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkExportPDF;
-
-        /// <summary>
-        /// Control lnkExportExcel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkExportExcel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTotalTickets;
 
         /// <summary>
         /// Control litTotalTickets.
@@ -96,111 +42,120 @@ namespace AppWTM
         protected global::System.Web.UI.WebControls.Literal litTotalTickets;
 
         /// <summary>
-        /// Control panelTotalChange.
+        /// Control divUsuariosActivos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelTotalChange;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUsuariosActivos;
 
         /// <summary>
-        /// Control litTotalChange.
+        /// Control litUsuariosActivos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTotalChange;
+        protected global::System.Web.UI.WebControls.Literal litUsuariosActivos;
 
         /// <summary>
-        /// Control litResolvedTickets.
+        /// Control divAreasActivas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litResolvedTickets;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAreasActivas;
 
         /// <summary>
-        /// Control panelResolvedChange.
+        /// Control litAreasActivas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelResolvedChange;
+        protected global::System.Web.UI.WebControls.Literal litAreasActivas;
 
         /// <summary>
-        /// Control litResolvedChange.
+        /// Control divTicketsAsignados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litResolvedChange;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTicketsAsignados;
 
         /// <summary>
-        /// Control litAvgRating.
+        /// Control litTicketsAsignados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litAvgRating;
+        protected global::System.Web.UI.WebControls.Literal litTicketsAsignados;
 
         /// <summary>
-        /// Control panelRatingChange.
+        /// Control divTicketsSinAsignar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelRatingChange;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTicketsSinAsignar;
 
         /// <summary>
-        /// Control litRatingChange.
+        /// Control litTicketsSinAsignar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litRatingChange;
+        protected global::System.Web.UI.WebControls.Literal litTicketsSinAsignar;
 
         /// <summary>
-        /// Control gvRecentTickets.
+        /// Control divTicketsConDepartamento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvRecentTickets;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTicketsConDepartamento;
 
         /// <summary>
-        /// Control globalDateFrom.
+        /// Control litTicketSinDep.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox globalDateFrom;
+        protected global::System.Web.UI.WebControls.Literal litTicketSinDep;
 
         /// <summary>
-        /// Control globalDateTo.
+        /// Control divTicketsSinDepartamento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox globalDateTo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTicketsSinDepartamento;
 
         /// <summary>
-        /// Control btnApplyDateRange.
+        /// Control litTicketConDep.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnApplyDateRange;
+        protected global::System.Web.UI.WebControls.Literal litTicketConDep;
+
+        /// <summary>
+        /// Control repeaterTickets.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeaterTickets;
     }
 }

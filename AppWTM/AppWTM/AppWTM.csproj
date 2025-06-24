@@ -66,6 +66,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="QuestPDF, Version=2025.5.1.0, Culture=neutral, PublicKeyToken=0f3c2b2315ff52c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuestPDF.2025.5.1\lib\netstandard2.0\QuestPDF.dll</HintPath>
+    </Reference>
     <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
       <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
     </Reference>
@@ -159,6 +162,7 @@
     <Content Include="Estadistica.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Home.aspx" />
     <Content Include="Img\Fabrica_Software.jpeg" />
     <Content Include="Img\fondo.png" />
     <Content Include="Img\logo.png" />
@@ -282,6 +286,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ListarUsuarios.aspx.cs">
       <DependentUpon>ListarUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -293,6 +304,7 @@
     <Compile Include="Model\CUsuario.cs" />
     <Compile Include="Model\ManagerBD.cs" />
     <Compile Include="Presenter\WEstadisticas.cs" />
+    <Compile Include="Presenter\WHome.cs" />
     <Compile Include="Presenter\WTickets.cs" />
     <Compile Include="Model\CTickets.cs" />
     <Compile Include="Model\EPrioridadTicket.cs" />
@@ -382,7 +394,9 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\packages\QuestPDF.2025.5.1\build\net4\QuestPDF.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\QuestPDF.2025.5.1\build\net4\QuestPDF.targets'))" />
   </Target>
+  <Import Project="..\packages\QuestPDF.2025.5.1\build\net4\QuestPDF.targets" Condition="Exists('..\packages\QuestPDF.2025.5.1\build\net4\QuestPDF.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

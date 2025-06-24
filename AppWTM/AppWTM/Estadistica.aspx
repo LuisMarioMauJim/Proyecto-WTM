@@ -9,6 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server" />
 
     <!-- Bootstrap JS + Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -261,8 +265,222 @@
             text-transform: capitalize;
         }
 
+        /* Estilos base para las tarjetas */
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--color-primary); /* Línea lateral izquierda */
+        }
+    
+        /* Efecto hover */
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    
+        /* Colores para las líneas laterales */
+        .stat-card.card-total {
+            border-left-color: var(--color-primary); /* Azul oscuro */
+        }
+    
+        .stat-card.card-resueltos {
+            border-left-color: var(--color-secondary); /* Vino/púrpura */
+        }
+    
+        .stat-card.card-calificacion {
+            border-left-color: var(--color-accent); /* Amarillo */
+        }
+    
+        /* Estilos del contenido */
+        .stat-card h3 {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+    
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+    
+        /* Estilos para los cambios porcentuales */
+        .stat-card .change {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    
+        .stat-card .change.positive {
+            color: #28a745; /* Verde para positivos */
+        }
+    
+        .stat-card .change.negative {
+            color: #dc3545; /* Rojo para negativos */
+        }
+    
+        .stat-card .change.neutral {
+            color: #6c757d; /* Gris para neutros */
+        }
+    
+        /* Efecto adicional al hacer hover */
+        .stat-card:hover {
+            border-left-width: 6px;
+        }
+    
+        /* Pequeña animación para el valor */
+        .stat-card .value {
+            transition: transform 0.3s ease;
+        }
+    
+        .stat-card:hover .value {
+            transform: scale(1.05);
+        }
+
+        .chart-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 3px solid var(--color-primary);
+        }
+    
+        .chart-title {
+            color: var(--color-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+    
+        .chart-description {
+            font-size: 0.8rem;
+        }
+    
+        .time-range-selector .btn {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+    
+        .time-range-selector .btn.active {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .badge-tickets {
+            background-color: #801250 !important;
+            color: white; /* Asegura buen contraste */
+        }
+
+        /* Estilos para la tabla */
+.table-header {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-row {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #edf2f9;
+}
+
+.table-row:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges de estado */
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+}
+
+.status-activo {
+    background-color: rgba(78, 115, 223, 0.1);
+    color: #4e73df;
+}
+
+.status-resuelto {
+    background-color: rgba(28, 200, 138, 0.1);
+    color: #1cc88a;
+}
+
+.status-pendiente {
+    background-color: rgba(246, 194, 62, 0.1);
+    color: #f6c23e;
+}
+
+.status-cancelado {
+    background-color: rgba(231, 74, 59, 0.1);
+    color: #e74a3b;
+}
+
+/* Estrellas de calificación */
+.rating-stars {
+    color: #f6c23e;
+    font-size: 0.9rem;
+}
+
+/* Para el responsive */
+@media (max-width: 768px) {
+    .table-responsive {
+        border: 0;
+    }
+    
+    .table thead {
+        display: none;
+    }
+    
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    
+    .table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+    }
+    
+    .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        width: 45%;
+        padding-right: 1rem;
+        font-weight: 600;
+        text-align: left;
+        color: #495057;
+    }
+}
+
+
     </style>
+
 </head>
+<script>
+    const idTotalTickets = '<%= litTotalTickets.ClientID %>';
+    const idResolvedTickets = '<%= litResolvedTickets.ClientID %>';
+    const idAvgRating = '<%= litAvgRating.ClientID %>';
+</script>
 <body>
 
         <div class="container-fluid">
@@ -271,96 +489,99 @@
                 <!-- Primera fila: título -->
                 <div class="row mb-3">
                     <div class="col">
-                        <h1 class="mb-0">Panel de Control</h1>
+                        <div class="profile-title">
+                            <h1 class="mb-0">Panel de Control</h1>
+                            <div id="TimeRange">
+                                <span id="currentTimeRange" runat="server" class="text-muted small d-block mt-1"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
 
                 <!-- Segunda fila: filtros y botones -->
                 <div class="row">
                     <div class="col">
-                        <div class="global-date-filter d-flex flex-wrap gap-2 align-items-center">
-                            <div class="custom-range-container position-relative">
-                                <button class="btn btn-sm custom-range d-none" type="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    Personalizado
-                                </button>
-                                <div class="custom-range-popup">
-                                    <div class="header">
-                                        <h3>Seleccionar rango</h3>
-                                    </div>
-                                    <div class="date-inputs">
-                                        <div>
-                                            <label>Desde</label>
-                                            <asp:TextBox ID="globalDateFrom" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                        <div>
-                                            <label>Hasta</label>
-                                            <asp:TextBox ID="globalDateTo" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="actions mt-2">
-                                        <button class="btn btn-sm" id="cancel-custom-range" type="button">Cancelar</button>
-                                        <asp:Button ID="btnApplyDateRange" runat="server" Text="Aplicar" CssClass="btn btn-sm active" OnClick="btnApplyDateRange_Click" />
-                                    </div>
+                        <div class="global-date-filter d-flex flex-wrap gap-4 align-items-start">
+
+                            <!-- Sección de filtros -->
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold mb-2">Filtros</span>
+
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <!-- Botón que abre el modal -->
+                                    <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#customRangeModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                        Personalizado
+                                    </button>
+
+                                    <!-- Botones rápidos -->
+                                    <asp:Button ID="btnToday" runat="server" Text="Hoy" CssClass="btn btn-sm custom-range" OnClick="btnDateFilter_Click" CommandArgument="hoy" />
+                                    <asp:Button ID="btnThisWeek" runat="server" Text="Esta semana" CssClass="btn btn-sm custom-range" OnClick="btnDateFilter_Click" CommandArgument="semana" />
+                                    <asp:Button ID="btnThisMonth" runat="server" Text="Este mes" CssClass="btn btn-sm custom-range" OnClick="btnDateFilter_Click" CommandArgument="mes" />
+                                    <asp:Button ID="btnThisYear" runat="server" Text="Este año" CssClass="btn btn-sm custom-range" OnClick="btnDateFilter_Click" CommandArgument="año" />
                                 </div>
                             </div>
 
-                            <!-- Botones rápidos -->
-                            <asp:Button ID="btnToday" runat="server" Text="Hoy" CssClass="btn btn-sm custom-range"  OnClick="btnDateFilter_Click" CommandArgument="hoy" />
-                            <asp:Button ID="btnThisWeek" runat="server" Text="Esta semana" CssClass="btn btn-sm custom-range"  OnClick="btnDateFilter_Click" CommandArgument="semana" />
-                            <asp:Button ID="btnThisMonth" runat="server" Text="Este mes" CssClass="btn btn-sm custom-range"  OnClick="btnDateFilter_Click" CommandArgument="mes" />
-                            <asp:Button ID="btnThisYear" runat="server" Text="Este año" CssClass="btn btn-sm custom-range"  OnClick="btnDateFilter_Click" CommandArgument="año" />
+                            <!-- Sección de exportación -->
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold mb-2">Exportar</span>
 
-                            <!-- Exportar -->
-                            <!-- Botones de exportación -->
-                            <asp:LinkButton ID="lnkExportPDF" runat="server" CssClass="btn btn-sm btn-outline-danger"
-                                OnClientClick="exportAllChartsToPDF(); return false;">
-                                <i class="bi bi-file-earmark-pdf"></i> PDF
-                            </asp:LinkButton>
-
-                            <asp:LinkButton ID="lnkExportExcel" runat="server" CssClass="btn btn-sm btn-outline-success"
-                                OnClick="lnkExportExcel_Click">
-                                <i class="bi bi-file-earmark-excel"></i> Excel
-                            </asp:LinkButton>
-
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <asp:LinkButton ID="lnkExportPDF" runat="server" CssClass="btn btn-sm btn-outline-danger"
+                                        OnClientClick="exportAllChartsToPDF(); return false;">
+                                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="lnkExportExcel" runat="server" CssClass="btn btn-sm btn-outline-success"
+                                        OnClick="lnkExportExcel_Click"
+                                        OnClientClick="alert('Generando archivo de click para aceptar y por favor espere...');">
+                                        <i class="bi bi-file-earmark-excel"></i> Excel
+                                    </asp:LinkButton>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
+
             </div>
 
             
-            <!-- Stats Cards -->
-            <div class="row mb-4 g-3">
+            <div id="resumen-tarjetas" class="row mb-4 g-3">
+                <!-- Tarjeta 1 - Tickets Totales -->
                 <div class="col-md-4 col-sm-6">
-                    <div class="stat-card">
-                        <h3>Tickets Totales</h3>
-                        <div class="value"><asp:Literal ID="litTotalTickets" runat="server" Text="1,248" /></div>
+                    <div class="stat-card card-total">
+                        <h3><i class="bi bi-ticket-detailed me-2"></i>Tickets Totales</h3>
+                        <div class="value"><asp:Literal ID="litTotalTickets" runat="server" Text="1,248"  ClientIDMode="Static"/></div>
                         <asp:Panel ID="panelTotalChange" runat="server" CssClass="change positive d-none">
-                            <asp:Literal ID="litTotalChange" runat="server" /> vs mes anterior
+                            <!--<asp:Literal ID="litTotalChange" runat="server" /> vs mes anterior-->
                         </asp:Panel>
                     </div>
                 </div>
+    
+                <!-- Tarjeta 2 - Tickets Resueltos -->
                 <div class="col-md-4 col-sm-6">
-                    <div class="stat-card">
-                        <h3>Tickets Resueltos</h3>
-                        <div class="value"><asp:Literal ID="litResolvedTickets" runat="server" Text="892" /></div>
+                    <div class="stat-card card-resueltos">
+                        <h3><i class="bi bi-check-circle me-2"></i>Tickets Resueltos</h3>
+                        <div class="value"><asp:Literal ID="litResolvedTickets" runat="server" Text="892"  ClientIDMode="Static"/></div>
                         <asp:Panel ID="panelResolvedChange" runat="server" CssClass="change positive d-none">
-                            <asp:Literal ID="litResolvedChange" runat="server" /> vs mes anterior
+                            <!--<asp:Literal ID="litResolvedChange" runat="server" /> vs mes anterior-->
                         </asp:Panel>
                     </div>
                 </div>
+    
+                <!-- Tarjeta 3 - Calificación Promedio -->
                 <div class="col-md-4 col-sm-6">
-                    <div class="stat-card">
-                        <h3>Calificación Promedio</h3>
-                        <div class="value"><asp:Literal ID="litAvgRating" runat="server" Text="4.2/5" /></div>
+                    <div class="stat-card card-calificacion">
+                        <h3><i class="bi bi-star-fill me-2"></i>Calificación Promedio</h3>
+                        <div class="value"><asp:Literal ID="litAvgRating" runat="server" Text="4.2/5"  ClientIDMode="Static"/></div>
                         <asp:Panel ID="panelRatingChange" runat="server" CssClass="change positive d-none">
-                            <asp:Literal ID="litRatingChange" runat="server" /> vs mes anterior
+                            <!--<asp:Literal ID="litRatingChange" runat="server" /> vs mes anterior-->
                         </asp:Panel>
                     </div>
                 </div>
@@ -372,15 +593,43 @@
             <!-- Charts Row 1 - Histórico y Estado -->
             <div class="row mb-4 g-3">
                 <div class="col-lg-8">
-                    <div class="chart-card">
-                        <h2>Creacion de Tickets</h2>
-                        <canvas id="ticketsByMonthChart"></canvas>
+                    <div class="chart-card shadow-sm">
+                        <!-- Encabezado mejorado -->
+                        <div class="chart-header d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h3 class="chart-title mb-1">Evolución de Tickets Creados</h3>
+                                <p class="chart-description text-muted small mb-0">
+                                    <i class="bi bi-info-circle"></i> 
+                                    Muestra la cantidad de tickets creados según el período seleccionado 
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Gráfica -->
+                        <div class="chart-container" style="position: relative; height:300px;">
+                            <canvas id="ticketsByMonthChart"></canvas>
+                        </div>
+            
+                        <!-- Leyenda interactiva -->
+                        <div class="chart-legend mt-2 text-center">
+                            <span class="badge badge-tickets me-2"><i class="bi bi-circle-fill"></i> Tickets creados</span>
+                            <span class="badge bg-secondary"><i class="bi bi-circle-fill"></i> Límite promedio</span>
+                        </div>
                     </div>
                 </div>
+    
                 <div class="col-lg-4">
-                    <div class="chart-card">
-                        <h2>Estado de Tickets</h2>
-                        <canvas id="ticketsStatusChart"></canvas>
+                    <div class="chart-card shadow-sm">
+                        <div class="chart-header mb-3">
+                            <h3 class="chart-title">Distribución por Estado</h3>
+                            <p class="chart-description text-muted small">
+                                <i class="bi bi-info-circle"></i> 
+                                Porcentaje de tickets según su estado actual
+                            </p>
+                        </div>
+                        <div class="chart-container" style="position: relative; height:300px;">
+                            <canvas id="ticketsStatusChart"></canvas>
+                        </div>
+                        <div class="chart-legend mt-2 text-center" id="statusLegend"></div>
                     </div>
                 </div>
             </div>
@@ -390,12 +639,20 @@
                 <div class="col-lg-6">
                     <div class="chart-card">
                         <h2>Calificación Promedio por Área</h2>
+                        <p class="chart-description text-muted small mb-0">
+                            <i class="bi bi-info-circle"></i> 
+                            Muestra la evaluación promedio recibida por cada área
+                        </p>
                         <canvas id="ratingByAreaChart"></canvas>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="chart-card">
                         <h2>Tickets por Área Remitente</h2>
+                        <p class="chart-description text-muted small mb-0">
+                            <i class="bi bi-info-circle"></i> 
+                            Distribución de tickets según el área que los generó
+                        </p>
                         <canvas id="ticketsByAreaChart"></canvas>
                     </div>
                 </div>
@@ -406,33 +663,97 @@
                 <div class="col-12">
                     <div class="chart-card">
                         <h2>Tickets Recientes</h2>
-                        <div class="table-responsive">
-                            <asp:GridView ID="gvRecentTickets" runat="server" CssClass="table" AutoGenerateColumns="false">
-                                <Columns>
-                                    <asp:BoundField DataField="Id" HeaderText="ID" />
-                                    <asp:BoundField DataField="Asunto" HeaderText="Asunto" />
-                                    <asp:BoundField DataField="Area" HeaderText="Área" />
-                                    <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
-                                    <asp:TemplateField HeaderText="Estado">
+                            <div class="table-responsive">
+                                <asp:GridView ID="gvRecentTickets" runat="server" 
+                                    CssClass="table table-hover align-middle" 
+                                    AutoGenerateColumns="false"
+                                    GridLines="None"
+                                    HeaderStyle-CssClass="table-header"
+                                    RowStyle-CssClass="table-row"
+                                    EmptyDataText="No hay tickets recientes para mostrar">
+                                    <Columns>
+                                        <asp:BoundField DataField="Id" HeaderText="ID" ItemStyle-CssClass="fw-semibold" />
+                                        <asp:BoundField DataField="Asunto" HeaderText="Asunto" ItemStyle-CssClass="text-truncate" ItemStyle-Width="30%" />
+                                        <asp:BoundField DataField="Area" HeaderText="Área" ItemStyle-CssClass="text-capitalize" />
+                                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" 
+                                            DataFormatString="{0:dd/MM/yyyy HH:mm}" 
+                                            ItemStyle-CssClass="text-nowrap" />
+                                        <asp:TemplateField HeaderText="Estado" HeaderStyle-Width="120px">
+                                            <ItemTemplate>
+                                                <span class='badge status-badge status-<%# Eval("StatusClass") %> rounded-pill py-2 px-3'>
+                                                    <i class="bi bi-circle-fill me-1"></i><%# Eval("Estado") %>
+                                                </span>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Calificación" ItemStyle-CssClass="text-center">
                                         <ItemTemplate>
-                                            <span class='status-badge status-<%# Eval("StatusClass") %>'><%# Eval("Estado") %></span>
+                                            <div class="rating-stars">
+                                                <%# GetRatingStars(Convert.ToInt32(Eval("Calificacion"))) %>
+                                            </div>
                                         </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="Calificacion" HeaderText="Calificación" />
-                                </Columns>
-                            </asp:GridView>
+</asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+                    <!-- Modal -->
+            <div class="modal fade" id="customRangeModal" tabindex="-1" aria-labelledby="customRangeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content border-0 shadow">
+                        <!-- Encabezado con color primary -->
+                        <div class="modal-header py-2 text-white" style="background-color: var(--color-primary); border-bottom: 2px solid var(--color-accent);">
+                            <h6 class="modal-title mb-0" id="customRangeModalLabel">
+                                <i class="bi bi-calendar-range me-2"></i>Seleccionar rango
+                            </h6>
+                            <button type="button" class="btn-close btn-close-white btn-sm" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+
+                        <!-- Cuerpo del modal -->
+                        <div class="modal-body py-3">
+                            <div class="date-inputs d-flex flex-column gap-3">
+                                <div>
+                                    <label for="globalDateFrom" class="form-label mb-1 small fw-bold" style="color: var(--color-primary);">Desde</label>
+                                    <asp:TextBox ID="globalDateFrom" runat="server" TextMode="Date" 
+                                        CssClass="form-control form-control-sm border-primary" />
+                                </div>
+
+                                <div>
+                                    <label for="globalDateTo" class="form-label mb-1 small fw-bold" style="color: var(--color-primary);">Hasta</label>
+                                    <asp:TextBox ID="globalDateTo" runat="server" TextMode="Date" 
+                                        CssClass="form-control form-control-sm border-primary" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie del modal con acciones -->
+                        <div class="modal-footer py-2 d-flex justify-content-between border-top-0">
+                            <button type="button" class="btn btn-sm" 
+                                    style="background-color: var(--color-light); color: var(--color-secondary); border: 1px solid var(--color-secondary);"
+                                    data-bs-dismiss="modal" id="cancel-custom-range">
+                                Cancelar
+                            </button>
+                            <asp:Button ID="btnApplyDateRange" runat="server" Text="Aplicar"
+                                CssClass="btn btn-sm text-white" 
+                                style="background-color: var(--color-secondary); border: 1px solid var(--color-secondary);"
+                                OnClick="btnApplyDateRange_Click" />
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
+
         </div>
-
-
-
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
- 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script>
         // Configuración común para gráficas
         Chart.defaults.font.family = 'Arial';
@@ -497,7 +818,7 @@
                             'rgba(254, 197, 38, 0.5)',  // Amarillo semitransparente
                             'rgba(15, 29, 96, 0.5)',    // Azul oscuro semitransparente
                             'rgba(128, 18, 80, 0.5)',   // Vino semitransparente
-                            'rgba(255, 255, 255, 0.5)', // Blanco semitransparente
+                            'rgba(214 182 200, 0.5)', // Blanco semitransparente
                             'rgba(254, 197, 38, 0.5)',
                             'rgba(15, 29, 96, 0.5)'
                         ],
@@ -505,7 +826,7 @@
                             '#fec526',
                             '#0f1d60',
                             '#801250',
-                            '#ffffff',
+                            '#d6b6c8',
                             '#fec526',
                             '#0f1d60'
                         ],
@@ -550,10 +871,10 @@
                             '#fec526',
                             '#0f1d60',
                             '#801250',
-                            '#ffffff',
+                            '#d6b6c8',
                             '#fec526'
                         ],
-                        borderWidth: 0
+                        borderWidth: 1
                     }]
                 },
                 options: {
@@ -625,42 +946,6 @@
         const customRangePopup = document.querySelector('.custom-range-popup');
         const cancelCustomRangeBtn = document.getElementById('cancel-custom-range');
 
-        // Mostrar/ocultar popup de rango personalizado
-        customRangeBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            customRangePopup.classList.toggle('show');
-        });
-
-        // Cancelar rango personalizado
-        cancelCustomRangeBtn.addEventListener('click', function () {
-            customRangePopup.classList.remove('show');
-        });
-
-        // Cerrar popup al hacer clic fuera
-        document.addEventListener('click', function () {
-            customRangePopup.classList.remove('show');
-        });
-
-        // Evitar que el clic en el popup lo cierre
-        customRangePopup.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const dropdownToggle = document.getElementById("exportDropdown");
-            const dropdownMenu = dropdownToggle.nextElementSibling;
-
-            dropdownToggle.addEventListener("click", function (e) {
-                e.preventDefault();
-                dropdownMenu.classList.toggle("show");
-            });
-
-            document.addEventListener("click", function (e) {
-                if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                    dropdownMenu.classList.remove("show");
-                }
-            });
-        });
 
 
         async function exportAllChartsToPDF() {
@@ -671,35 +956,183 @@
                 format: "a4"
             });
 
-            // Encuentra todos los canvas de gráficos
+            alert("Generando archivo de click para aceptar y por favor espere...");
+
+            //let yOffset = 20;
+
+            const timeRangeElement = document.getElementById("TimeRange");
+            const timeRangeText = timeRangeElement ? timeRangeElement.innerText.trim() : "";
+
+
+            pdf.setFontSize(12);
+            pdf.setTextColor(100);
+            pdf.text(`Periodo: ${timeRangeText}`, 40, 30); // (x: 40, y: 30)
+
+            let yOffset = 50;
+
+            // 📌 1. CAPTURAR TARJETAS
+            const resumenElement = document.getElementById("resumen-tarjetas");
+
+            // Asegúrate de que no tenga clases ocultas (como d-none)
+            resumenElement.querySelectorAll(".d-none").forEach(el => el.classList.remove("d-none"));
+
+            const resumenCanvas = await html2canvas(resumenElement, {
+                scale: 4,
+                useCORS: true
+            });
+
+            const resumenImg = resumenCanvas.toDataURL("image/png");
+            const canvasWidth = resumenCanvas.width;
+            const canvasHeight = resumenCanvas.height;
+            const imgWidth = 500;
+            const imgHeight = (canvasHeight / canvasWidth) * imgWidth;
+
+
+            pdf.setFontSize(16);
+            pdf.text("Resumen General", 40, yOffset + 15);
+            pdf.addImage(resumenImg, "PNG", 40, yOffset + 30, imgWidth, imgHeight);
+            yOffset += imgHeight + 50; // deja 20px de espacio  Espacio después de las tarjetas
+
+            if (yOffset > pdf.internal.pageSize.getHeight() - 100) {
+                // Imprimir número en la página actual antes de crear una nueva
+                const pageNum = pdf.getNumberOfPages();
+                pdf.setFontSize(10);
+                pdf.text(`Página ${pageNum}`, 500, pdf.internal.pageSize.getHeight() - 20);
+
+                pdf.addPage();
+                yOffset = 20;
+            }
+
+
             const chartCanvases = [
-                { id: "ticketsByAreaChart", title: "Tickets por Área" },
-                { id: "ratingByAreaChart", title: "Calificación Promedio" },
-                { id: "ticketsStatusChart", title: "Estado de Tickets" },
-                { id: "ticketsByMonthChart", title: "Tickets por Mes" }
+                {
+                    id: "ticketsByMonthChart",
+                    title: "Tickets por Mes",
+                    descripcion: "Muestra la cantidad de tickets creados según el período seleccionado"
+                },
+                {
+                    id: "ticketsStatusChart",
+                    title: "Estado de Tickets",
+                    descripcion: "Distribución del porcentaje de los tickets según su estado actual, según el período seleccionado."
+                },
+                {
+                    id: "ratingByAreaChart",
+                    title: "Calificación Promedio",
+                    descripcion: "Evaluación promedio de cada área con base en encuestas de satisfacción."
+                },
+                {
+                    id: "ticketsByAreaChart",
+                    title: "Tickets por Área",
+                    descripcion: "Cantidad de tickets generados por cada área operativa."
+                }
             ];
 
-            let yOffset = 20;
+            
 
             for (const chart of chartCanvases) {
-                const canvas = document.getElementById(chart.id);
-                if (!canvas) continue;
+                const chartInstance = Chart.getChart(chart.id);
+                if (!chartInstance) continue;
 
-                const imgData = canvas.toDataURL("image/png", 1.0);
-                pdf.setFontSize(14);
-                pdf.text(chart.title, 40, yOffset + 15);
-                pdf.addImage(imgData, "PNG", 40, yOffset + 30, 500, 250);
-                yOffset += 300;
+                const imgData = createHighResChartImage(chartInstance);
 
-                // Si se pasa del alto de la página, crea una nueva
-                if (yOffset + 250 > pdf.internal.pageSize.getHeight()) {
+                // 📌 Dimensiones
+                let imgWidth = 500;
+                let imgHeight = 250;
+
+                if (chart.id === "ticketsStatusChart") {
+                    imgWidth = 300;
+                    imgHeight = 300;
+                }
+
+                // Si no cabe en la página actual, crea una nueva
+                if (yOffset + imgHeight > pdf.internal.pageSize.getHeight()) {
                     pdf.addPage();
                     yOffset = 20;
                 }
+
+                // Titulo
+                pdf.setFontSize(14);
+                pdf.text(chart.title, 40, yOffset + 15);
+
+                // Agregar descripción si existe
+                if (chart.descripcion) {
+                    pdf.setFontSize(10);
+                    const splitText = pdf.splitTextToSize(chart.descripcion, 500); // envuelve texto largo
+                    pdf.text(splitText, 40, yOffset + 30);
+                    // Calcular espacio total ocupado por descripción
+                    const descripcionHeight = 15 * splitText.length;
+
+                    // Aquí das un margen extra debajo de la descripción antes de la imagen
+                    const marginBottom = 20;
+
+                    yOffset += descripcionHeight + marginBottom;
+                } else {
+                    // Si no hay descripción, dejar un espacio base
+                    yOffset += 20;
+                } 
+
+                // 📌 Dibujo especial para ticketsStatusChart
+                if (chart.id === "ticketsStatusChart") {
+                    // Imagen
+                    pdf.addImage(imgData, "PNG", 40, yOffset, imgWidth, imgHeight);
+
+                    // Márgenes personalizados
+                    const tableMarginLeft = 140;  // margen adicional izquierdo
+                    const tableMarginTop = 90;   // margen adicional superior
+
+                    // Tabla al lado derecho
+                    const tableX = 260 + tableMarginLeft;
+                    let tableY = yOffset + tableMarginTop;
+
+                    pdf.setFontSize(10);
+                    pdf.text("Resumen de Estados", tableX, tableY);
+                    tableY += 15;
+
+                    // Construir tabla dinámicamente
+                    const statusLabels = <%= GetStatusLabels() %>;
+                    const statusData = <%= GetStatusData() %>;
+
+                    const tableData = statusLabels.map((label, i) => [label, `${statusData[i]}%`]);
+
+                    for (const [estado, valor] of tableData) {
+                        pdf.text(estado, tableX, tableY);
+                        pdf.text(valor, tableX + 80, tableY);
+                        tableY += 15;
+                    }
+
+
+                    yOffset += imgHeight + 40;
+                } else {
+                    // Imagen normal
+                    pdf.addImage(imgData, "PNG", 40, yOffset, imgWidth, imgHeight);
+                    yOffset += imgHeight + 40;
+                }
+
             }
 
             pdf.save("graficas.pdf");
         }
+
+        function createHighResChartImage(chart, scale = 6) {
+            const origCanvas = chart.canvas;
+            const width = origCanvas.width;
+            const height = origCanvas.height;
+
+            const tmpCanvas = document.createElement("canvas");
+            tmpCanvas.width = width * scale;
+            tmpCanvas.height = height * scale;
+
+            const tmpCtx = tmpCanvas.getContext("2d");
+            tmpCtx.scale(scale, scale);
+
+            // Copia la imagen del canvas original al nuevo con escala
+            tmpCtx.drawImage(origCanvas, 0, 0);
+
+            return tmpCanvas.toDataURL("image/png");
+        }
+
+
+
 
 
 

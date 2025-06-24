@@ -92,7 +92,7 @@ namespace AppWTM
             e.Row.Cells[2].Visible = false;
             e.Row.Cells[7].Visible = false;
             e.Row.Cells[9].Visible = false;
-            e.Row.Cells[11].Visible = false;
+            //e.Row.Cells[11].Visible = false;
 
             //Pr
 

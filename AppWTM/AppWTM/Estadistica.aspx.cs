@@ -6,6 +6,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using AppWTM.Model;
+using System.Web.UI.WebControls;
+using System.Text;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using Newtonsoft.Json;
+using System.IO;
+using System.Web.Services;
+using ClosedXML.Excel;
 
 namespace AppWTM
 {
@@ -17,6 +26,7 @@ namespace AppWTM
         private DataSet CalificacionesPorArea;
         private DataSet EstadosTickets;
         private DataSet TicketsPorArea;
+        private DataSet TodosLosTickets;
 
         DateTime fechaParaComparar = DateTime.Today;
         private DataSet datosComparativos;
@@ -46,10 +56,12 @@ namespace AppWTM
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            filtroSeleccionado = Request.QueryString["filtro"]?.ToLower() ?? "hoy";
-            GetGraphics();
-            Departamentos = Grafica.listarDepartamentos();
+            if (!IsPostBack)
+            {
+                filtroSeleccionado = Request.QueryString["filtro"]?.ToLower() ?? "hoy";
+                GetGraphics();
+                Departamentos = Grafica.listarDepartamentos();
+            }
         }
 
         protected void btnDateFilter_Click(object sender, EventArgs e)
@@ -81,9 +93,10 @@ namespace AppWTM
                 fechaDesdePersonalizada.HasValue &&
                 fechaHastaPersonalizada.HasValue)
             {
-                fechaInicio = fechaDesdePersonalizada.Value;
-                fechaFin = fechaHastaPersonalizada.Value;
+                fechaInicio = fechaDesdePersonalizada.Value.Date;
+                fechaFin = fechaHastaPersonalizada.Value.Date.AddDays(1).AddSeconds(-1); // Hasta 23:59:59
             }
+
             else
             {
                 (fechaInicio, fechaFin) = ObtenerRangoFechas(filtroSeleccionado);
@@ -153,17 +166,21 @@ namespace AppWTM
             switch (filtro)
             {
                 case "hoy":
-                    return (hoy, hoy);
+                    return (hoy, hoy.AddDays(1).AddSeconds(-1)); // Hasta las 23:59:59
                 case "semana":
-                    return (hoy.AddDays(-(int)hoy.DayOfWeek + 1), hoy);
+                    var inicioSemana = hoy.AddDays(-(int)hoy.DayOfWeek + 1);
+                    return (inicioSemana, hoy.AddDays(1).AddSeconds(-1));
                 case "mes":
-                    return (new DateTime(hoy.Year, hoy.Month, 1), hoy);
+                    var inicioMes = new DateTime(hoy.Year, hoy.Month, 1);
+                    return (inicioMes, hoy.AddDays(1).AddSeconds(-1));
                 case "año":
-                    return (new DateTime(hoy.Year, 1, 1), hoy);
+                    var inicioAnio = new DateTime(hoy.Year, 1, 1);
+                    return (inicioAnio, hoy.AddDays(1).AddSeconds(-1));
                 default:
-                    return (hoy, hoy);
+                    return (hoy, hoy.AddDays(1).AddSeconds(-1));
             }
         }
+
 
         private void GetTicketsCards(DateTime inicio, DateTime fin)
         {
@@ -175,7 +192,9 @@ namespace AppWTM
 
                 litTotalTickets.Text = SafeGet(row, "TotalTickets");
                 litResolvedTickets.Text = SafeGet(row, "TicketsResueltos");
-                litAvgRating.Text = SafeGet(row, "CalificacionPromedio");
+                var calificacion = SafeGet(row, "CalificacionPromedio");
+                litAvgRating.Text = string.IsNullOrEmpty(calificacion) ? "0.0 / 5" : calificacion + " / 5";
+
             }
         }
 
@@ -186,6 +205,15 @@ namespace AppWTM
 
         private void GetTicketsMonht(DateTime inicio, DateTime fin)
         {
+            if (inicio.Date == fin.Date)
+            {
+                currentTimeRange.InnerText = $"Del día {inicio:dd MMM yyyy}";
+            }
+            else
+            {
+                currentTimeRange.InnerText = $"Del {inicio:dd MMM yyyy} al {fin:dd MMM yyyy}";
+            }
+
             var ds = Grafica.ObtenerTicketsPorMes(inicio, fin);
 
             labelsPorRango.Clear();
@@ -196,9 +224,37 @@ namespace AppWTM
                 var tabla = ds.Tables[0];
                 if (tabla.Rows.Count > 0)
                 {
+                    TimeSpan rango = fin.Date - inicio.Date;
+                    int totalDias = rango.Days;
+
+                    bool mismoDia = inicio.Date == fin.Date;
+
                     foreach (DataRow row in tabla.Rows)
                     {
-                        labelsPorRango.Add(row["Agrupador"].ToString());
+                        string labelFormateado;
+
+                        if (mismoDia)
+                        {
+                            // El agrupador es un número entero (hora)
+                            int hora = Convert.ToInt32(row["Agrupador"]);
+                            labelFormateado = $"{hora:00}:00"; // Ej: "06:00", "13:00"
+                        }
+                        else
+                        {
+                            // El agrupador es un DateTime
+                            DateTime fecha = Convert.ToDateTime(row["Agrupador"]);
+
+                            if ((fin - inicio).Days < 4)
+                            {
+                                labelFormateado = $"{fecha:dd MMM yyyy} {fecha:HH}"; // ej: "23 Jun 2025 14"
+                            }
+                            else
+                            {
+                                labelFormateado = fecha.ToString("dd MMM yyyy"); // ej: "23 Jun 2025"
+                            }
+                        }
+
+                        labelsPorRango.Add(labelFormateado);
                         valoresPorRango.Add(Convert.ToInt32(row["Cantidad"]));
                     }
                 }
@@ -342,6 +398,7 @@ namespace AppWTM
         private void GetTicketsRecently(DateTime inicio, DateTime fin)
         {
             DataSet ds = Grafica.ObtenerTicketsRecientes(inicio, fin);
+            TodosLosTickets = Grafica.TodosLosTickets(inicio, fin);
             if (ds != null && ds.Tables.Count > 0)
             {
                 DataTable dt = ds.Tables[0];
@@ -375,9 +432,6 @@ namespace AppWTM
                             row["StatusClass"] = "badge bg-dark";
                             break;
                     }
-
-
-
                 }
 
                 gvRecentTickets.DataSource = dt;
@@ -388,77 +442,183 @@ namespace AppWTM
 
         protected void btnApplyDateRange_Click(object sender, EventArgs e)
         {
-            var globalDateFrom = FindControl("globalDateFrom") as System.Web.UI.WebControls.TextBox;
-            var globalDateTo = FindControl("globalDateTo") as System.Web.UI.WebControls.TextBox;
-
-            string formato = "yyyy/MM/dd"; // O el formato que uses para las fechas en el input
-
-            if (globalDateFrom != null && globalDateTo != null &&
-                DateTime.TryParseExact(globalDateFrom.Text, formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime desde) &&
-                DateTime.TryParseExact(globalDateTo.Text, formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime hasta))
+            try
             {
-                fechaDesdePersonalizada = desde;
-                fechaHastaPersonalizada = hasta;
+                // 1. Obtener los controles de fecha directamente por ID
+                string fechaDesdeStr = globalDateFrom.Text.Trim();
+                string fechaHastaStr = globalDateTo.Text.Trim();
+
+                // 2. Validaciones básicas
+                if (string.IsNullOrEmpty(fechaDesdeStr) || string.IsNullOrEmpty(fechaHastaStr))
+                {
+                    RegisterAlertScript("Error", "Debe completar ambas fechas.", "error");
+                    return;
+                }
+
+                // 3. Parsear fechas con formato específico (ajusta según tu necesidad)
+                DateTime fechaDesde, fechaHasta;
+                if (!DateTime.TryParse(fechaDesdeStr, out fechaDesde) || !DateTime.TryParse(fechaHastaStr, out fechaHasta))
+                {
+                    RegisterAlertScript("Error", "Formato de fecha inválido. Use DD/MM/AAAA.", "error");
+                    return;
+                }
+
+                // 4. Validar lógica de fechas
+                if (fechaDesde > fechaHasta)
+                {
+                    RegisterAlertScript("Error", "La fecha inicial no puede ser mayor que la fecha final.", "error");
+                    return;
+                }
+
+                // 5. Validar rango máximo (opcional)
+                if ((fechaHasta - fechaDesde).TotalDays > 365)
+                {
+                    RegisterAlertScript("Error", "El rango máximo permitido es de 1 año.", "error");
+                    return;
+                }
+
+                // 6. Guardar valores
+                fechaDesdePersonalizada = fechaDesde;
+                fechaHastaPersonalizada = fechaHasta;
                 filtroSeleccionado = "personalizado";
 
+                // 7. Actualizar datos
                 GetGraphics();
+
+                // 8. Mostrar confirmación y cerrar modal
+                string successScript = @"
+                                    Swal.fire({
+                                        title: 'Éxito',
+                                        text: 'Rango de fechas aplicado correctamente',
+                                        icon: 'success'
+                                    }).then(function() {
+                                        $('#customRangeModal').modal('hide');
+                                    });";
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "successAlert", successScript, true);
             }
-            else
+            catch (Exception ex)
             {
-                // Mostrar error de validación  
-                ScriptManager.RegisterStartupScript(this, GetType(), "SweetAlertError", "Swal.fire('Error', 'No se pudo validar la fecha. Usa formato yyyy/MM/dd', 'error');", true);
+                RegisterAlertScript("Error", $"Ocurrió un error inesperado: {ex.Message}", "error");
             }
         }
 
-        protected void lnkExportPDF_Click(object sender, EventArgs e)
+        // Método auxiliar mejorado para registrar alerts
+        private void RegisterAlertScript(string title, string message, string type)
         {
+            // Usar comillas simples para el texto dentro de JavaScript
+            string script = $@"Swal.fire({{ 
+                title: '{title.Replace("'", "\\'")}', 
+                text: '{message.Replace("'", "\\'")}', 
+                icon: '{type}' 
+            }});";
 
+            ScriptManager.RegisterStartupScript(this, GetType(),
+                Guid.NewGuid().ToString(), script, true);
         }
+
+
+        protected string GetRatingStars(int rating)
+        {
+            StringBuilder stars = new StringBuilder();
+
+            for (int i = 1; i <= 5; i++)
+            {
+                if (i <= rating)
+                {
+                    stars.Append("<i class=\"bi bi-star-fill\"></i>");
+                }
+                else
+                {
+                    stars.Append("<i class=\"bi bi-star\"></i>");
+                }
+            }
+
+            return stars.ToString();
+        }
+
+
+
 
         protected void lnkExportExcel_Click(object sender, EventArgs e)
         {
-            using (var workbook = new ClosedXML.Excel.XLWorkbook())
+
+            try
             {
-                GetGraphics();
-                // Tickets por área
-                if (TicketsPorArea != null && TicketsPorArea.Tables.Count > 0)
+                GetGraphics(); // Llenas tus otros datasets
+
+                using (var workbook = new ClosedXML.Excel.XLWorkbook())
                 {
-                    workbook.Worksheets.Add(TicketsPorArea.Tables[0], "Tickets por Área");
-                }
+                    // ✅ HOJA 1: Todos los tickets
+                    if (TodosLosTickets != null && TodosLosTickets.Tables.Count > 0)
+                    {
+                        var dt = TodosLosTickets.Tables[0];
+                        var ws = workbook.Worksheets.Add("Todos los Tickets");
+                        ws.Cell(1, 1).InsertTable(dt, "Tabla_TodosLosTickets", true).Theme = XLTableTheme.TableStyleLight9;
+                        ws.Columns().AdjustToContents();
+                    }
 
-                // Calificaciones por área
-                if (CalificacionesPorArea != null && CalificacionesPorArea.Tables.Count > 0)
-                {
-                    workbook.Worksheets.Add(CalificacionesPorArea.Tables[0], "Calificaciones");
-                }
+                    // Hoja 2: Tickets por Área
+                    if (TicketsPorArea != null && TicketsPorArea.Tables.Count > 0)
+                    {
+                        var dt = TicketsPorArea.Tables[0];
+                        var ws = workbook.Worksheets.Add("Tickets por Área");
+                        ws.Cell(1, 1).InsertTable(dt, "Tabla_TicketsArea", true).Theme = XLTableTheme.TableStyleLight9;
+                        ws.Columns().AdjustToContents();
+                    }
 
-                // Estados de los tickets
-                if (EstadosTickets != null && EstadosTickets.Tables.Count > 0)
-                {
-                    workbook.Worksheets.Add(EstadosTickets.Tables[0], "Estados");
-                }
+                    // Hoja 3: Calificaciones
+                    if (CalificacionesPorArea != null && CalificacionesPorArea.Tables.Count > 0)
+                    {
+                        var dt = CalificacionesPorArea.Tables[0];
+                        var ws = workbook.Worksheets.Add("Calificaciones");
+                        ws.Cell(1, 1).InsertTable(dt, "Tabla_Calificaciones", true).Theme = XLTableTheme.TableStyleLight9;
+                        ws.Columns().AdjustToContents();
+                    }
 
-                // Comparativos si deseas incluirlos
-                //if (datosComparativos != null && datosComparativos.Tables.Count > 0)
-                //{
-                //    workbook.Worksheets.Add(datosComparativos.Tables[0], "Comparativos");
-                //}
+                    // Hoja 4: Estados
+                    if (EstadosTickets != null && EstadosTickets.Tables.Count > 0)
+                    {
+                        var dt = EstadosTickets.Tables[0];
+                        var ws = workbook.Worksheets.Add("Estados");
+                        ws.Cell(1, 1).InsertTable(dt, "Tabla_Estados", true).Theme = XLTableTheme.TableStyleLight9;
+                        ws.Columns().AdjustToContents();
+                    }
 
-                // Crear el archivo de Excel en memoria
-                using (var ms = new System.IO.MemoryStream())
-                {
-                    workbook.SaveAs(ms);
-                    byte[] bytes = ms.ToArray();
+                    // Hoja 5: Resumen
+                    var resumen = workbook.Worksheets.Add("Resumen");
+                    resumen.Cell(1, 1).Value = "Reporte Estadísticas";
+                    resumen.Cell(2, 1).Value = $"Generado el {DateTime.Now:dd/MM/yyyy HH:mm}";
+                    resumen.Cell(4, 1).Value = "Descripción: Este archivo contiene datos de tickets y calificaciones por área.";
+                    resumen.Columns().AdjustToContents();
 
-                    // Descargar el archivo
-                    Response.Clear();
-                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    Response.AddHeader("content-disposition", "attachment;filename=Estadisticas.xlsx");
-                    Response.BinaryWrite(bytes);
-                    Response.End();
+                    // Exportar archivo
+                    using (var ms = new System.IO.MemoryStream())
+                    {
+                        workbook.SaveAs(ms);
+                        ms.Position = 0;
+
+                        string fileName = $"Estadisticas_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                        Response.Clear();
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.AddHeader("Content-Disposition", $"attachment; filename={fileName}");
+                        Response.BinaryWrite(ms.ToArray());
+                        Response.Flush();
+                        Response.End();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Response.Clear();
+                Response.ContentType = "text/plain";
+                Response.Write("Error al generar el archivo: " + ex.Message);
+                Response.End();
+            }
         }
+
+
 
     }
 }

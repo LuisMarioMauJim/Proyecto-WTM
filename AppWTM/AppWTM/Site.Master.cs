@@ -101,5 +101,10 @@ namespace AppWTM
         {
             Response.Redirect("~/Estadistica.aspx");
         }
+
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Home.aspx");
+        }
     }
 }

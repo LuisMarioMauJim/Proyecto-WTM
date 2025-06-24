@@ -45,14 +45,19 @@ namespace AppWTM.Model
             };
 
             if (fechaInicio.HasValue)
-                parametros.Add(new SqlParameter("@fechaInicio", fechaInicio.Value.Date));
+                parametros.Add(new SqlParameter("@fechaInicio", fechaInicio.Value.Date)); // 00:00:00
 
             if (fechaFin.HasValue)
-                parametros.Add(new SqlParameter("@fechaFin", fechaFin.Value.Date.AddDays(1).AddTicks(-1)));
+            {
+                // Garantizar 23:59:59 para datetime (no usar .AddTicks(-1))
+                var fin = fechaFin.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+                parametros.Add(new SqlParameter("@fechaFin", fin));
+            }
 
             ds = objManagerBD.GetData("spuEstadisticas", parametros.ToArray());
             return ds;
         }
+
 
         // Estado de tickets
         public DataSet ObtenerEstadoTickets(DateTime? fechaInicio = null, DateTime? fechaFin = null, int? idEmpresa = null)
@@ -134,7 +139,7 @@ namespace AppWTM.Model
         }
 
         // Exportar datos de tickets
-        public DataSet ExportarDatosTickets(DateTime? fechaInicio = null, DateTime? fechaFin = null, int? idEmpresa = null)
+        public DataSet TodosLosTickets(DateTime? fechaInicio = null, DateTime? fechaFin = null, int? idEmpresa = null)
         {
             DataSet ds = new DataSet();
             var parametros = new List<SqlParameter>

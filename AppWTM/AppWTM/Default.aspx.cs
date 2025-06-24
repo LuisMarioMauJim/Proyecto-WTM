@@ -76,10 +76,11 @@ namespace AppWTM
                 fkRol = Convert.ToInt32(row["Rol"]),
                 status = (string)row["Status"],
                 telefono = (string)row["Telefono"],
-                fkArea = Convert.ToInt32(row["Área"])
+                fkArea = Convert.ToInt32(row["Área"]),
+                fkPrioridad = Convert.ToInt32(row["Prioridad"]),
             };
             Session["UsuarioLog"] = usuario;
-            Response.Redirect("Tickets.aspx");
+            Response.Redirect("~/Home.aspx", false);
         }
 
 

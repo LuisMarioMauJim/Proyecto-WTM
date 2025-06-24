@@ -192,10 +192,10 @@ footer {
         <div class="main-wrapper">
             <div class="sidebar" runat="server" id="sidebarPanel" visible='<%# !IsLoginPage %>'>
                 <div class="menu">
-                    <div class="menu-item">
+                    <asp:LinkButton ID="btnHome" runat="server" OnClick="btnHome_Click" class="menu-item">
                         <i class="bi bi-house"></i>
                         <div class="tooltip">Home</div>
-                    </div>
+                    </asp:LinkButton>
                     <div class="menu-item">
                         <asp:LinkButton ID="btnTicketsArea" runat="server" OnClick="btnTicketsArea_Click">
                             <i class="bi bi-card-checklist"></i>
