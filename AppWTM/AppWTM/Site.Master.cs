@@ -85,7 +85,10 @@ namespace AppWTM
         {
             Response.Redirect("~/About.aspx");
         }
-
+        protected void btnCalendario_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/NuevoEvento.aspx");
+        }
         protected void btnSalir_Click(object sender, EventArgs e)
         {
             Session.Remove("UsuarioLog");

@@ -208,9 +208,11 @@ footer {
                             <div class="tooltip">Crear Ticket</div>
                         </asp:LinkButton>
                     </div>
-                    <div class="menu-item">
-                        <i class="bi bi-calendar-event"></i>
-                        <div class="tooltip">Calendario</div>
+                   <div class="menu-item">
+                        <asp:LinkButton ID="btnCalendario" runat="server" OnClick="btnCalendario_Click">
+                            <i class="bi bi-calendar-event"></i>
+                            <div class="tooltip">Calendario</div>
+                        </asp:LinkButton>
                     </div>
                     <div class="menu-item">
                         <asp:LinkButton ID="btnEstadisticas" runat="server" OnClick="btnEstadisticas_Click">
