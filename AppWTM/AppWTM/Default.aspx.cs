@@ -80,6 +80,8 @@ namespace AppWTM
                 fkPrioridad = Convert.ToInt32(row["Prioridad"]),
             };
             Session["UsuarioLog"] = usuario;
+            Session["IdUsuario"] = usuario.pkUsuario;
+            Session["DepartamentoId"] = usuario.fkArea;
             Response.Redirect("~/Home.aspx", false);
         }
 
