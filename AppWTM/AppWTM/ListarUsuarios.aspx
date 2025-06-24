@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
      <link href="Styles/usuarios.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" />
+
     <main aria-labelledby="Gestion de usuarios">
     <!-- Header en una sola línea -->
     <div class="header-container">
@@ -16,7 +21,7 @@
         <div class="search-center">
             <div class="search-input-group">
                 <asp:TextBox ID="txtSearch" runat="server" 
-                    CssClass="search-input" placeholder="Buscar usuarios...">
+                    CssClass="search-input" placeholder="Buscar usuarios..." ClientIDMode="Static">
                 </asp:TextBox>
                 <asp:LinkButton ID="btnSearch" runat="server"
                     CssClass="btn-search"
@@ -150,6 +155,7 @@
                                     <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-danger" data-bs-dismiss="modal" Text="Cancelar"/>
                                     <asp:Button ID="btnEnviar" runat="server" CssClass="btn btn-primary" Text="Registrar" OnClick="btnRegistrar_Click"/>
                                     <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-primary" Text="Actualizar" onClick="btnActualizar_Click" Visible="false"/>
+                                    <asp:Button ID="btnResetPassword" runat="server" Text="Restablecer contraseña" CssClass="btn btn-warning" OnClick="btnResetPassword_Click" Visible="false" />
                                 </div>
                             </div>
                         </asp:PlaceHolder>
@@ -260,7 +266,26 @@
 
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var txtBox = $("#<%= txtSearch.ClientID %>");
+        txtBox.autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '<%= ResolveUrl("ListarUsuarios.aspx/GetUsuariosSugerencia") %>',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ prefix: request.term }),
+                    dataType: "json",
+                    success: function (data) {
+                        response(data.d);
+                    }
+                });
+            },
+            minLength: 2 // Empieza a sugerir desde 2 caracteres
+        });
+    });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
 </asp:Content>

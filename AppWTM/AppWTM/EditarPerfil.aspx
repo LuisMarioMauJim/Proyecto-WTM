@@ -63,7 +63,7 @@
                 <asp:ListItem Text="Inactivo"></asp:ListItem>
             </asp:DropDownList>
         </div>
-        <div class="mb-3">
+        <%--<div class="mb-3">
             <label for="drpRol" class="form-label">Rol</label>
             <asp:DropDownList ID="drpRol" runat="server" CssClass="form-control">
                 <asp:ListItem Text="Selecciona un rol" Value="0" Selected="True"></asp:ListItem>
@@ -72,7 +72,7 @@
                 <asp:ListItem Text="Administrador"></asp:ListItem>
                 <asp:ListItem Text="Asignador de tickets" Value="4"></asp:ListItem>
             </asp:DropDownList>
-        </div>
+        </div>--%>
         <div class="button-container mt-4">
             <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-danger" Text="Cancelar" OnClick="btnCancel_Click"/>
             <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-primary" Text="Actualizar" OnClick="btnActualizar_Click"/>

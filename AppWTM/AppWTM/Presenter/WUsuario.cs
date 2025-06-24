@@ -250,6 +250,20 @@ namespace AppWTM.Presenter
             );
         }
 
+        public bool ReestablecerContra(int idUsuario, byte[] nuevoHash, byte[] nuevoSalt)
+        {
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@opcion", 9),
+                new SqlParameter("@Id_Usuario", idUsuario),
+                new SqlParameter("@Usu_PasswordHash", nuevoHash),
+                new SqlParameter("@Usu_Salt", nuevoSalt)
+            };
+
+            return managerBD.UpdateData("spuUsuarios", parametros.ToArray());
+        }
+
+
 
     }
 }

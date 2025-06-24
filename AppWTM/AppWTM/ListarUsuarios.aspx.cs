@@ -9,6 +9,9 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppWTM
 {
@@ -83,6 +86,9 @@ namespace AppWTM
                 btnEnviar.Visible = false;
                 txtPassword.Visible = false;
                 lblPassword.Visible = false;
+                drpEstado.Visible = true;
+                btnResetPassword.Visible = true;
+                ViewState["UsuarioID_Editar"] = pkUsuario;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "setTimeout(AbrirModal, 0);", true);
             }
         }
@@ -91,8 +97,8 @@ namespace AppWTM
         {
             e.Row.Cells[2].Visible = false;
             e.Row.Cells[7].Visible = false;
-            e.Row.Cells[9].Visible = false;
-            //e.Row.Cells[11].Visible = false;
+            //e.Row.Cells[10].Visible = false;
+            e.Row.Cells[11].Visible = false;
 
             //Pr
 
@@ -127,7 +133,7 @@ namespace AppWTM
                     PasswordHash = hash,
                     Salt = salt,
                     fkArea = Convert.ToInt32(drpArea.SelectedValue),
-                    status = drpEstado.SelectedValue,
+                    status = "Activo",
                     fkRol = Convert.ToInt32(drpRol.SelectedIndex)
                 };
 
@@ -178,6 +184,7 @@ namespace AppWTM
             lblRegistrar.Visible = true;
             txtPassword.Visible = true;
             lblPassword.Visible = true;
+            drpEstado.Visible= false;
         }
 
         protected void btnRegModal_Click(object sender, EventArgs e)
@@ -189,6 +196,8 @@ namespace AppWTM
             lblRegistrar.Visible = true;
             lblPassword.Visible = true;
             txtPassword.Visible = true;
+            drpEstado.Visible = false;
+            btnResetPassword.Visible = false;
             ScriptManager.RegisterStartupScript(this, this.GetType(), "showModal", "setTimeout(AbrirModal, 0);", true);
         }
 
@@ -386,6 +395,63 @@ namespace AppWTM
             ScriptManager.RegisterStartupScript(this, this.GetType(), "limpiarRoles", "limpiarCheckboxesRoles();", true);
         }
 
+        protected void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            if (ViewState["UsuarioID_Editar"] is int userId)
+            {
+                // 1) Genera clave temporal de 8 caracteres
+                string nuevaPass = Guid.NewGuid().ToString("N").Substring(0, 8);
 
+                // 2) Hashea + sala
+                byte[] hash, salt;
+                PasswordHelper.CreateHash(nuevaPass, out hash, out salt);
+
+                // 3) Actualiza en BD
+                bool ok = wUsuario.ReestablecerContra(userId, hash, salt);
+                if (ok)
+                {
+                    // 4) Muestra al admin la nueva contraseña
+                    string script = $@"
+              Swal.fire({{
+                title: 'Contraseña restablecida',
+                html: 'La nueva contraseña temporal es:<br/><b>{nuevaPass}</b>',
+                icon: 'success'
+              }});";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pwReset", script, true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "pwErr",
+                      "Swal.fire('Error','No se pudo restablecer la contraseña','error');", true);
+                }
+            }
+        }
+
+        [WebMethod]
+        public static List<string> GetUsuariosSugerencia(string prefix)
+        {
+            var sugerencias = new List<string>();
+            string connStr = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = @"
+                                 SELECT TOP 10 Usu_Nombre, Usu_Apellidos FROM tblUsuario
+                                 WHERE Usu_Nombre LIKE @prefix + '%' OR Usu_Apellidos LIKE @prefix + '%'";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@prefix", prefix);
+                    conn.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            // Puedes mostrar solo nombre, solo apellido, o ambos juntos
+                            sugerencias.Add(dr["Usu_Nombre"].ToString() + " " + dr["Usu_Apellidos"].ToString());
+                        }
+                    }
+                }
+            }
+            return sugerencias;
+        }
     }
 }

@@ -1,16 +1,251 @@
-﻿.ticket-card {
-    max-width: 280px; /* ajusta a tu gusto */
-    margin: 0.5rem;
-    display: inline-block;
-    vertical-align: top;
-    cursor: pointer;
+﻿/* Estilos para todoslostickets.css */
+
+/* Estilos generales */
+.container {
+    padding: 20px;
 }
 
-    .ticket-card h5 {
-        font-size: 1rem;
+h2 {
+    color: #0f1d60;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Estilos para las pestañas */
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+    .nav-tabs .nav-link {
+        color: #495057;
+        font-weight: 600;
+        border: none;
+        padding: 10px 20px;
+        margin-right: 5px;
+        border-radius: 5px 5px 0 0;
+        transition: all 0.3s ease;
     }
-/* Para centrar el container de cards */
-.container .ticket-list {
-    display: flex;
-    flex-wrap: wrap;
+
+        .nav-tabs .nav-link:hover {
+            border-color: transparent;
+            color: #0f1d60;
+            background-color: #f8f9fa;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #fff;
+            background-color: #0f1d60;
+            border-color: transparent;
+            font-weight: 600;
+        }
+
+        /* Colores específicos para cada pestaña */
+        .nav-tabs .nav-link#activos-tab.active {
+            background-color: #28a745; /* Verde para Activos */
+        }
+
+        .nav-tabs .nav-link#pendientes-tab.active {
+            background-color: #fec526; /* Amarillo para Pendientes */
+            color: #0f1d60;
+        }
+
+        .nav-tabs .nav-link#resueltos-tab.active {
+            background-color: #28a745; /* Verde para Resueltos */
+        }
+
+        .nav-tabs .nav-link#cancelados-tab.active {
+            background-color: #dc3545; /* Rojo para Cancelados */
+        }
+
+/* Estilos para las tarjetas de tickets */
+.card {
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-color: #0f1d60;
+    }
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f1d60;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-muted {
+    font-size: 0.75rem;
+}
+
+/* Estilos para los badges */
+.badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 5px;
+}
+
+    /* Colores específicos para los badges de estado */
+    .badge.bg-secondary[data-estado="Azul"],
+    .badge.bg-secondary:contains("ACTIVO") {
+        background-color: #28a745 !important; /* Verde para Azul */
+    }
+
+    .badge.bg-secondary[data-estado="Pendiente"],
+    .badge.bg-secondary:contains("PENDIENTE") {
+        background-color: #fec526 !important; /* Amarillo para Pendiente */
+        color: #0f1d60 !important;
+    }
+
+    .badge.bg-secondary[data-estado="Resuelto"],
+    .badge.bg-secondary:contains("RESUELTO") {
+        background-color: #28a745 !important; /* Verde para Resuelto */
+    }
+
+    .badge.bg-secondary[data-estado="Cancelado"],
+    .badge.bg-secondary:contains("CANCELADO") {
+        background-color: #dc3545 !important; /* Rojo para Cancelado */
+    }
+
+    /* Colores para los badges de prioridad (puedes ajustarlos según necesites) */
+    .badge.bg-primary[data-prioridad="Alta"],
+    .badge.bg-primary:contains("Alta") {
+        background-color: #dc3545 !important; /* Rojo para Alta */
+    }
+
+    .badge.bg-primary[data-prioridad="Media"],
+    .badge.bg-primary:contains("Media") {
+        background-color: #fec526 !important; /* Amarillo para Media */
+        color: #0f1d60 !important;
+    }
+
+    .badge.bg-primary[data-prioridad="Baja"],
+    .badge.bg-primary:contains("Baja") {
+        background-color: #17a2b8 !important; /* Azul claro para Baja */
+    }
+
+/* Estilos para el botón de asignar */
+.btn-outline-primary {
+    color: #0f1d60;
+    border-color: #0f1d60;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #0f1d60;
+        color: white;
+    }
+
+/* Estilos para el modal */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    background-color: #0f1d60;
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Estilos para las estrellas de calificación */
+.stars {
+    font-size: 24px;
+    color: #ddd;
+    display: inline-block;
+}
+
+.star {
+    color: gold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+    .star:hover,
+    .star.selected {
+        color: gold;
+    }
+
+/* Estilos para el file upload */
+.input-group-text {
+    background-color: #0f1d60;
+    color: white;
+    border: none;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+/* Botones del modal */
+.btn-primary {
+    background-color: #0f1d60;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #1a2980;
+    }
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
 }

@@ -121,7 +121,6 @@ namespace AppWTM
                 status = "Activo",
                 fkRol = 1
             };
-
             if (wUsuario.RegistrarUsuario(nuevo))
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert",
