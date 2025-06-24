@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 <link href="Styles/crearticket.css" rel="stylesheet" type="text/css" />
     <style>
         /* SOLUCIÓN: Indicadores de estado circulares */
@@ -110,6 +111,23 @@
                                                 <p><b>Área:</b> <%# Eval("Departamento") %></p>
                                                 <p><b>Descripción:</b> <%# Eval("Descripción") %></p>
                                                 <p><b>Responsable:</b> <%# Eval("Agente") %></p>
+                                                <asp:Panel ID="pnlEvidencia" runat="server"
+                                                    Visible='<%# !string.IsNullOrEmpty(Eval("Tick_EvidenciaRuta").ToString()) %>'
+                                                    CssClass="mt-3 text-center">
+                                                    
+                                                <p><b>Evidencia de resolución:</b></p>
+                                                    <asp:HyperLink 
+                                                        ID="hlEvidencia" 
+                                                        runat="server" 
+                                                        NavigateUrl='<%# Eval("Tick_EvidenciaRuta") %>' 
+                                                        Target="_blank"
+                                                        CssClass="btn btn-outline-primary btn-sm">
+                                                        <i class="bi bi-file-earmark-pdf"></i> Ver Evidencia
+                                                    </asp:HyperLink>
+
+                                                </asp:Panel>
+
+
                                                     <asp:Panel ID="calificacionEstrellas" runat="server" CssClass="mt-3">
                                                          <label class="form-label">Califica el servicio del agente:</label>
                                                                 <div id="starsContainer" class="stars text-center mb-3">

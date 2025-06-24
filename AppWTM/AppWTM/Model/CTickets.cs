@@ -23,7 +23,7 @@ namespace AppWTM.Presenter
         public DateTime Fecha { get; set; }
 
         public int Tick_Calificacion { get; set; }
-
+        public string Tick_EvidenciaRuta { get; set; }
 
         public CTickets() 
         {

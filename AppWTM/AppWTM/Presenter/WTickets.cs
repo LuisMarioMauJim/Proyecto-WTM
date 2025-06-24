@@ -177,7 +177,8 @@ namespace AppWTM.Model
                 Solicitante = row["Solicitante"]?.ToString() ?? "Desconocido",
                 AgenteNombre = row["Agente"]?.ToString() ?? "Sin asignar",
                 fk_Agente = (int)row["AgenteId"],
-                Tick_Calificacion = (int)row["Calif"]
+                Tick_Calificacion = row["Calif"] != DBNull.Value ? (int)row["Calif"] : 0,
+                Tick_EvidenciaRuta = row["Ruta"]?.ToString()
             };
         }
 
@@ -201,6 +202,18 @@ namespace AppWTM.Model
             if (ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0]["Tick_Calificacion"] != DBNull.Value)
                 return Convert.ToInt32(ds.Tables[0].Rows[0]["Tick_Calificacion"]);
             return 0;
+        }
+
+        public bool GuardarRutaEvidencia(int idTicket, string rutaRelativa)
+        {
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@opcion", 12),
+                new SqlParameter("@Id_Ticket", idTicket),
+                new SqlParameter("@Tick_EvidenciaRuta", rutaRelativa)
+            };
+
+            return objManagerBD.UpdateData("spuTickets", parametros.ToArray());
         }
 
 

@@ -4,7 +4,8 @@
     Inherits="AppWTM.TodosLosTickets" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-  <link href="Styles/todoslostickets.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="Styles/crearticket.css" rel="stylesheet" type="text/css" />
     <style>
         .star {
           font-size: 2rem;        /* tamaño grande */
@@ -109,6 +110,18 @@
           Cancelados
         </button>
       </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link"
+                  id="prioridad-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#prioridad"
+                  type="button"
+                  role="tab"
+                  aria-controls="prioridad"
+                  aria-selected="false">
+            Prioridad
+          </button>
+        </li>
     </ul>
 
     <!-- TAB CONTENT -->
@@ -133,7 +146,7 @@
                     <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                     <div class="mb-2">
                       <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                      <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                        <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                     </div>
                     <small class="text-muted">
                       #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -144,10 +157,8 @@
                     <small class="text-muted">
                       Agente: <%# Eval("Agente") %>
                     </small>
-                  </div>
-                </asp:LinkButton>
-
-                <!-- Asignarme -->
+                      <br /><br />
+                                      <!-- Asignarme -->
                 <asp:Button ID="btnAsignarTodos"
                             runat="server"
                             CssClass="btn btn-sm btn-outline-primary"
@@ -156,6 +167,8 @@
                             CommandArgument='<%# Eval("Id_Ticket") %>'
                             Visible='<%# Eval("Agente").ToString() == "Sin asignar" %>'
                             OnClientClick="return confirmAssign(this);" />
+                  </div>
+                </asp:LinkButton>
               </div>
             </ItemTemplate>
           </asp:Repeater>
@@ -181,7 +194,7 @@
                     <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                     <div class="mb-2">
                       <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                      <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                        <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                     </div>
                     <small class="text-muted">
                       #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -192,10 +205,9 @@
                     <small class="text-muted">
                       Agente: <%# Eval("Agente") %>
                     </small>
-                  </div>
-                </asp:LinkButton>
-
-                <asp:Button ID="btnAsignar2"
+                                            <br /><br />
+                                      <!-- Asignarme -->
+                <asp:Button ID="btnAsignarTodos"
                             runat="server"
                             CssClass="btn btn-sm btn-outline-primary"
                             Text="Asignarme"
@@ -203,6 +215,8 @@
                             CommandArgument='<%# Eval("Id_Ticket") %>'
                             Visible='<%# Eval("Agente").ToString() == "Sin asignar" %>'
                             OnClientClick="return confirmAssign(this);" />
+                  </div>
+                </asp:LinkButton>
               </div>
             </ItemTemplate>
           </asp:Repeater>
@@ -228,7 +242,7 @@
                     <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                     <div class="mb-2">
                       <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                      <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                        <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                     </div>
                     <small class="text-muted">
                       #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -239,6 +253,7 @@
                     <small class="text-muted">
                       Agente: <%# Eval("Agente") %>
                     </small>
+
                   </div>
                 </asp:LinkButton>
               </div>
@@ -263,7 +278,7 @@
                         <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                         <div class="mb-2">
                           <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                          <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                            <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                         </div>
                         <small class="text-muted">
                           #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -301,7 +316,7 @@
                     <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                     <div class="mb-2">
                       <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                      <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                        <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                     </div>
                     <small class="text-muted">
                       #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -339,7 +354,7 @@
                     <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                     <div class="mb-2">
                       <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                      <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                        <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                     </div>
                     <small class="text-muted">
                       #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -377,7 +392,7 @@
                     <p class="card-text mb-1"><%# Eval("Descripción") %></p>
                     <div class="mb-2">
                       <span class="badge bg-primary"><%# Eval("Prioridad") %></span>
-                      <span class="badge bg-secondary"><%# Eval("Estado") %></span>
+                        <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
                     </div>
                     <small class="text-muted">
                       #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
@@ -398,7 +413,45 @@
     </div>
   </div>
 
-  <!-- Modal de detalle (sin cambios) -->
+
+    <div class="tab-pane fade" id="prioridad" role="tabpanel" aria-labelledby="prioridad-tab">
+  <div class="row">
+    <asp:Repeater ID="rptPrioridad"
+                  runat="server"
+                  OnItemCommand="rptTicketsArea_ItemCommand"
+                  OnItemDataBound="rptTicketsArea_ItemDataBound">
+      <ItemTemplate>
+        <div id="ticketContainer" runat="server" class="col-sm-6 col-md-4 col-lg-3 mb-4">
+          <asp:LinkButton ID="lnkVerDetallePrioridad"
+                          runat="server"
+                          CssClass="card h-100 text-start text-decoration-none text-dark mb-2"
+                          CommandName="VerDetalle"
+                          CommandArgument='<%# Eval("Id_Ticket") %>'>
+            <div class="card-body">
+              <h5 class="card-title"><%# Eval("Título") %></h5>
+              <p class="card-text mb-1"><%# Eval("Descripción") %></p>
+              <div class="mb-2">
+                <span class="badge bg-primary" data-prioridad='<%# Eval("PrioridadAreaTexto") %>'><%# Eval("PrioridadAreaTexto") %></span>
+                <span class="badge bg-secondary" data-estado='<%# Eval("Estado") %>'><%# Eval("Estado") %></span>
+              </div>
+              <small class="text-muted">
+                #<%# Eval("Id_Ticket") %> – <%# Eval("Fecha","{0:dd/MM/yyyy}") %>
+              </small><br/>
+              <small class="text-muted">
+                Solicitante: <%# Eval("Usuario") %>
+              </small><br/>
+              <small class="text-muted">
+                Agente: <%# Eval("Agente") %>
+              </small>
+            </div>
+          </asp:LinkButton>
+        </div>
+      </ItemTemplate>
+    </asp:Repeater>
+  </div>
+</div>
+
+  <!-- Modal de detalle-->
   <div class="modal fade" runat="server" id="ticketDetalleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -417,22 +470,55 @@
             <dt class="col-sm-3">Solicitante</dt>
             <dd class="col-sm-9"><asp:Label ID="lblDetSolicitante" runat="server" /></dd>
 
-            <dt class="col-sm-3">Estado</dt>
+            <dt class="col-sm-3" id="lblEstado" runat="server">Estado</dt>
             <dd class="col-sm-9">
               <asp:DropDownList ID="ddlDetEstado" runat="server" CssClass="form-select" />
             </dd>
           </dl>
+            <asp:HiddenField ID="hfAgenteId" runat="server" />
         </div>
-          <asp:Panel ID="calificacionEstrellas" runat="server" CssClass="mt-3">
-              <label class="form-label">Califica el servicio del agente:</label>
-              <div class="stars text-center mb-3">
-                <asp:Literal ID="litStars" runat="server" />
-              </div>
-            </asp:Panel>
+        <asp:Panel ID="calificacionEstrellas" runat="server" CssClass="mt-4 border-top pt-3">
+          <h5 class="mb-3" runat="server" id="lblCalif">
+            Calificación del servicio:
+          </h5>
+
+          <div class="stars text-center mb-3">
+            <asp:Literal ID="litStars" runat="server" />
+          </div>
+
+          <h5 class="mt-4">
+            <i class="bi bi-file-earmark-arrow-up"></i> Evidencia del servicio (PDF)
+          </h5>
+
+          <asp:Label ID="lblFileMessage"
+                     runat="server"
+                     CssClass="alert alert-warning mt-2 p-2"
+                     Visible="false" />
+
+          <div class="input-group mt-2">
+            <span class="input-group-text"><i class="bi bi-upload"></i></span>
+            <asp:FileUpload ID="fuEvidencia" runat="server" CssClass="form-control" Accept=".pdf" />
+          </div>
+
+          <asp:HyperLink 
+              ID="lnkVerPDF" 
+              runat="server" 
+              Text="📎 Ver evidencia actual"
+              Target="_blank" 
+              CssClass="btn btn-outline-primary mt-3 d-block w-100"
+              Visible="false" />
+        </asp:Panel>
+
 
           
-              <asp:HiddenField ID="hfCalificacion" runat="server" />
+        <asp:HiddenField ID="hfCalificacion" runat="server" />
         <div class="modal-footer">
+        <asp:Button ID="btnGuardarEvidencia" runat="server"
+            CssClass="btn btn-success me-2 d-none"
+            Text="Subir Evidencia"
+            OnClick="btnGuardarEvidencia_Click"
+            ClientIDMode="Static" />
+
           <asp:Button ID="btnCambiarEstado"
                       runat="server"
                       CssClass="btn btn-primary"
@@ -448,34 +534,22 @@
   </div>
     <asp:ScriptManagerProxy runat="server" ID="ScriptManagerProxy1" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<%--<script>
-    function abrirModalDetalles(ticket) {
-        document.getElementById("detalleId").textContent = ticket.id;
-        document.getElementById("detalleEstado").textContent = ticket.estado;
-        document.getElementById("detalleDescripcion").textContent = ticket.descripcion;
-
-        // Mostrar calificación solo si el ticket está resuelto
-        if (ticket.estado === "Resuelto") {
-            document.getElementById("calificacionEstrellas").style.display = "block";
-        } else {
-            document.getElementById("calificacionEstrellas").style.display = "none";
-        }
-
-        //let modal = new bootstrap.Modal(document.getElementById("modalDetalles"));
-        //modal.show();
-
-        //let starsCont = document.querySelector('[id$="starsContainer"]');
-        //if (starsCont) {
-        //    const rating = parseInt(starsCont.getAttribute('data-rating') || "0");
-        //    starsCont.querySelectorAll('.star').forEach(s => {
-        //        const val = parseInt(s.dataset.value, 10);
-        //        if (val <= rating) s.classList.add('selected');
-        //        else s.classList.remove('selected');
-        //    });
-        //}
-    }
-</script>--%>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById('<%= fuEvidencia.ClientID %>');
+    const uploadButton = document.getElementById('<%= btnGuardarEvidencia.ClientID %>');
+
+      if (fileInput && uploadButton) {
+          fileInput.addEventListener("change", function () {
+              if (fileInput.files.length > 0) {
+                  uploadButton.classList.remove("d-none");
+              } else {
+                  uploadButton.classList.add("d-none");
+              }
+          });
+      }
+  });
+</script>
 </asp:Content>

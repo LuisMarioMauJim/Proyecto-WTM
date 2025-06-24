@@ -318,8 +318,14 @@ namespace AppWTM
                     return "estado-activo"; // Valor por defecto
             }
         }
-
-      
-
+        protected string GenerarBotonEvidencia(object evidencia)
+        {
+            string ruta = evidencia?.ToString();
+            if (!string.IsNullOrEmpty(ruta))
+            {
+                return $"<div class='mt-3 text-center'><a href='{ruta}' target='_blank' class='btn btn-outline-primary btn-sm'><i class='bi bi-file-earmark-pdf'></i> Ver Evidencia</a></div>";
+            }
+            return string.Empty;
+        }
     }
 }
