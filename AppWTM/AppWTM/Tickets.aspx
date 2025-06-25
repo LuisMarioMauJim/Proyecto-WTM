@@ -262,7 +262,7 @@
             </div>
         </div>
     </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>s
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
         function abrirModalDetalles(ticket) {
             document.getElementById("detalleId").textContent = ticket.id;
