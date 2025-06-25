@@ -207,7 +207,6 @@
 
     </div>
 </div>
-
     <div class="modal fade" id="crearTicketModal" tabindex="-1" aria-labelledby="crearTicketModalLabel" aria-hidden="true">
         <div class="modal-dialog <%--modal-lg--%>" style="max-width: 45%;">
             <div class="modal-content">
@@ -246,7 +245,7 @@
                                                     <small class="form-text text-muted" style="text-align: left; margin-left: 3rem;">Sea específico</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                            </div>
                                         <div class="card-footer">
                                             <div style="display: flex; justify-content: center; gap: 15px;">
                                                 <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar"  style="width: 120px;" OnClick="btnCancelar_Click"/>
