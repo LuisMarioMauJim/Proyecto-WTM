@@ -1050,20 +1050,22 @@
             });
 
             // Validación del tamaño del archivo antes de subir
-            uploadButton.addEventListener("click", function (e) {
-                lblMensaje.classList.add("d-none"); // Oculta el mensaje si ya estaba visible
+            fileInput.addEventListener("change", function () {
+                lblMensaje.style.display = "none";
                 lblMensaje.textContent = "";
 
                 if (fileInput.files.length > 0) {
-                    const fileSize = fileInput.files[0].size;
-                    const maxSize = 12 * 1024 * 1024; // 12 MB
+                    const file = fileInput.files[0];
 
-                    if (fileSize > maxSize) {
-                        e.preventDefault();
+                    var maxSize = 12 * 1024 * 1024; // 12 MB
+                    if (file.size > maxSize) {
                         lblMensaje.className = "alert alert-warning mt-2 p-2";
-                        lblMensaje.textContent = "El archivo es demasiado grande. Máximo permitido: 12 MB.";
+                        lblMensaje.textContent = "Archivo demasiado grande. Máximo permitido: 12 MB.";
                         lblMensaje.style.display = "block";
-                        return false;
+
+                        // Borrar el archivo del input
+                        fileInput.value = ""; // <-- ¡Esto borra el archivo cargado!
+                        uploadButton.classList.add("d-none");
                     }
                 }
             });
