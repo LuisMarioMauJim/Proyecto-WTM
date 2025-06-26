@@ -556,7 +556,7 @@
                 <!-- Tarjeta 1 - Tickets Totales -->
                 <div class="col-md-4 col-sm-6">
                     <div class="stat-card card-total">
-                        <h3><i class="bi bi-ticket-detailed me-2"></i>Tickets Totales</h3>
+                        <h3><i class="bi bi-ticket-detailed me-2"></i>Tickets totales</h3>
                         <div class="value"><asp:Literal ID="litTotalTickets" runat="server" Text="1,248"  ClientIDMode="Static"/></div>
                         <asp:Panel ID="panelTotalChange" runat="server" CssClass="change positive d-none">
                             <!--<asp:Literal ID="litTotalChange" runat="server" /> vs mes anterior-->
@@ -567,7 +567,7 @@
                 <!-- Tarjeta 2 - Tickets Resueltos -->
                 <div class="col-md-4 col-sm-6">
                     <div class="stat-card card-resueltos">
-                        <h3><i class="bi bi-check-circle me-2"></i>Tickets Resueltos</h3>
+                        <h3><i class="bi bi-check-circle me-2"></i>Tickets resueltos</h3>
                         <div class="value"><asp:Literal ID="litResolvedTickets" runat="server" Text="892"  ClientIDMode="Static"/></div>
                         <asp:Panel ID="panelResolvedChange" runat="server" CssClass="change positive d-none">
                             <!--<asp:Literal ID="litResolvedChange" runat="server" /> vs mes anterior-->
@@ -578,7 +578,7 @@
                 <!-- Tarjeta 3 - Calificación Promedio -->
                 <div class="col-md-4 col-sm-6">
                     <div class="stat-card card-calificacion">
-                        <h3><i class="bi bi-star-fill me-2"></i>Calificación Promedio</h3>
+                        <h3><i class="bi bi-star-fill me-2"></i>Calificación promedio</h3>
                         <div class="value"><asp:Literal ID="litAvgRating" runat="server" Text="4.2/5"  ClientIDMode="Static"/></div>
                         <asp:Panel ID="panelRatingChange" runat="server" CssClass="change positive d-none">
                             <!--<asp:Literal ID="litRatingChange" runat="server" /> vs mes anterior-->
@@ -600,7 +600,7 @@
                                 <h3 class="chart-title mb-1">Evolución de Tickets Creados</h3>
                                 <p class="chart-description text-muted small mb-0">
                                     <i class="bi bi-info-circle"></i> 
-                                    Muestra la cantidad de tickets creados según el período seleccionado 
+                                    Muestra la cantidad de tickets creados según el período seleccionado. 
                                 </p>
                             </div>
                         </div>
@@ -620,7 +620,7 @@
                 <div class="col-lg-4">
                     <div class="chart-card shadow-sm">
                         <div class="chart-header mb-3">
-                            <h3 class="chart-title">Distribución por Estado</h3>
+                            <h3 class="chart-title">Distribución por estado</h3>
                             <p class="chart-description text-muted small">
                                 <i class="bi bi-info-circle"></i> 
                                 Porcentaje de tickets según su estado actual
@@ -648,7 +648,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="chart-card">
-                        <h2>Tickets por Área Remitente</h2>
+                        <h2>Tickets por Área remitente</h2>
                         <p class="chart-description text-muted small mb-0">
                             <i class="bi bi-info-circle"></i> 
                             Distribución de tickets según el área que los generó
@@ -672,9 +672,9 @@
                                     RowStyle-CssClass="table-row"
                                     EmptyDataText="No hay tickets recientes para mostrar">
                                     <Columns>
-                                        <asp:BoundField DataField="Id" HeaderText="ID" ItemStyle-CssClass="fw-semibold" />
+                                        <asp:BoundField DataField="ID" HeaderText="ID" ItemStyle-CssClass="fw-semibold" />
                                         <asp:BoundField DataField="Asunto" HeaderText="Asunto" ItemStyle-CssClass="text-truncate" ItemStyle-Width="30%" />
-                                        <asp:BoundField DataField="Area" HeaderText="Área" ItemStyle-CssClass="text-capitalize" />
+                                        <asp:BoundField DataField="Área" HeaderText="Área" ItemStyle-CssClass="text-capitalize" />
                                         <asp:BoundField DataField="Fecha" HeaderText="Fecha" 
                                             DataFormatString="{0:dd/MM/yyyy HH:mm}" 
                                             ItemStyle-CssClass="text-nowrap" />
@@ -956,7 +956,7 @@
                 format: "a4"
             });
 
-            alert("Generando archivo de click para aceptar y por favor espere...");
+            alert("Generando archivo. Haga clic en 'Aceptar' y por favor espere...");
 
             //let yOffset = 20;
 
@@ -966,7 +966,7 @@
 
             pdf.setFontSize(12);
             pdf.setTextColor(100);
-            pdf.text(`Periodo: ${timeRangeText}`, 40, 30); // (x: 40, y: 30)
+            pdf.text(`Período seleccionado: ${timeRangeText}`, 40, 30); // (x: 40, y: 30)
 
             let yOffset = 50;
 
@@ -989,7 +989,7 @@
 
 
             pdf.setFontSize(16);
-            pdf.text("Resumen General", 40, yOffset + 15);
+            pdf.text("Resumen general del sistema", 40, yOffset + 15);
             pdf.addImage(resumenImg, "PNG", 40, yOffset + 30, imgWidth, imgHeight);
             yOffset += imgHeight + 50; // deja 20px de espacio  Espacio después de las tarjetas
 
@@ -1007,24 +1007,25 @@
             const chartCanvases = [
                 {
                     id: "ticketsByMonthChart",
-                    title: "Tickets por Mes",
-                    descripcion: "Muestra la cantidad de tickets creados según el período seleccionado"
+                    title: "Tickets por mes",
+                    descripcion: "Muestra la cantidad de tickets creados según el período seleccionado."
                 },
                 {
                     id: "ticketsStatusChart",
-                    title: "Estado de Tickets",
-                    descripcion: "Distribución del porcentaje de los tickets según su estado actual, según el período seleccionado."
+                    title: "Estado de los tickets",
+                    descripcion: "Distribución porcentual de los tickets según su estado actual y el período seleccionado."
                 },
                 {
                     id: "ratingByAreaChart",
-                    title: "Calificación Promedio",
-                    descripcion: "Evaluación promedio de cada área con base en encuestas de satisfacción."
+                    title: "Calificación promedio",
+                    descripcion: "Evaluación promedio de cada área, basada en encuestas de satisfacción."
                 },
                 {
                     id: "ticketsByAreaChart",
-                    title: "Tickets por Área",
+                    title: "Tickets por área",
                     descripcion: "Cantidad de tickets generados por cada área operativa."
                 }
+
             ];
 
             
@@ -1085,7 +1086,7 @@
                     let tableY = yOffset + tableMarginTop;
 
                     pdf.setFontSize(10);
-                    pdf.text("Resumen de Estados", tableX, tableY);
+                    pdf.text("Estados de tickets", tableX, tableY);
                     tableY += 15;
 
                     // Construir tabla dinámicamente
@@ -1113,7 +1114,7 @@
             pdf.save("graficas.pdf");
         }
 
-        function createHighResChartImage(chart, scale = 6) {
+        function createHighResChartImage(chart, scale = 2) {
             const origCanvas = chart.canvas;
             const width = origCanvas.width;
             const height = origCanvas.height;

@@ -37,7 +37,7 @@ namespace AppWTM
                 int idUsuario = usuario.pkUsuario;
 
                 CargarDatos(idEmpresa, idDepartamento, idUsuario);
-                litBienvenida.Text = $"¡Bienvenido de nuevo {usuario.nombre} !";
+                litBienvenida.Text = $"¡Bienvenido de nuevo, {usuario.nombre} !";
             }
         }
 

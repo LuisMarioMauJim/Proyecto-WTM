@@ -281,7 +281,7 @@
                     <!-- Columna 2: Tarjetas -->
                     <div class="col-lg-4 col-md-12 d-flex flex-column">
                         <div id="divTotalTickets" runat="server" class="stat-card tickets p-3 mb-3 flex-grow-1 d-flex flex-column justify-content-center text-start">
-                            <h6 class="text-muted"><i class="fas fa-ticket-alt me-2"></i>Mis Tickets totales en el mes</h6>
+                            <h6 class="text-muted"><i class="fas fa-ticket-alt me-2"></i>Mis Tickets creados en el mes</h6>
                             <div class="stat-value">
                                 <asp:Literal ID="litTotalTickets" runat="server" />
                             </div>
@@ -305,25 +305,25 @@
                             </div>
                         </div>
                         <div id="divTicketsAsignados" runat="server" class="stat-card assigned p-3 mb-3 flex-grow-1 d-flex flex-column justify-content-center text-start">
-                            <h6 class="text-muted"><i class="fas fa-user-check me-2"></i>Tickets con Asignador en el mes</h6>
+                            <h6 class="text-muted"><i class="fas fa-user-check me-2"></i>Tickets de los que soy asignador en el mes</h6>
                             <div class="stat-value">
                                 <asp:Literal ID="litTicketsAsignados" runat="server" />
                             </div>
                         </div>
                         <div id="divTicketsSinAsignar" runat="server"  class="stat-card unassigned p-3 mb-3 flex-grow-1 d-flex flex-column justify-content-center text-start">
-                            <h6 class="text-muted"><i class="fas fa-question-circle me-2"></i>Tickets sin Asignador en el mes</h6>
+                            <h6 class="text-muted"><i class="fas fa-question-circle me-2"></i>Tickets sin asignador en el mes</h6>
                             <div class="stat-value">
                                 <asp:Literal ID="litTicketsSinAsignar" runat="server" />
                             </div>
                         </div>
                         <div id="divTicketsConDepartamento" runat="server"  class="stat-card unassigned p-3 mb-3 flex-grow-1 d-flex flex-column justify-content-center text-start">
-                            <h6 class="text-muted"><i class="fas fa-question-circle me-2"></i>Tickets sin Departamento en el mes</h6>
+                            <h6 class="text-muted"><i class="fas fa-question-circle me-2"></i>Tickets sin departamento en el mes</h6>
                             <div class="stat-value">
                                 <asp:Literal ID="litTicketSinDep" runat="server" />
                             </div>
                         </div>
                         <div id="divTicketsSinDepartamento" runat="server"  class="stat-card unassigned p-3 mb-3 flex-grow-1 d-flex flex-column justify-content-center text-start">
-                            <h6 class="text-muted"><i class="fas fa-question-circle me-2"></i>Tickets con Departamento en el mes</h6>
+                            <h6 class="text-muted"><i class="fas fa-question-circle me-2"></i>Tickets con departamento en el mes</h6>
                             <div class="stat-value">
                                 <asp:Literal ID="litTicketConDep" runat="server" />
                             </div>
@@ -335,7 +335,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="tickets-list-container">
-                            <h5 class="section-title"><i class="fas fa-history"></i> Mis últimos tickets</h5>
+                            <h5 class="section-title"><i class="fas fa-history"></i> Mis últimos tickets creados</h5>
 
                             <!-- Repeater (simulado estáticamente con HTML) -->
                             <asp:Repeater ID="repeaterTickets" runat="server">

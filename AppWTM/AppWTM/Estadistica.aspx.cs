@@ -466,7 +466,7 @@ namespace AppWTM
                 // 4. Validar lógica de fechas
                 if (fechaDesde > fechaHasta)
                 {
-                    RegisterAlertScript("Error", "La fecha inicial no puede ser mayor que la fecha final.", "error");
+                    RegisterAlertScript("Error", "La fecha inicial no puede ser mayor que la fecha final", "error");
                     return;
                 }
 
@@ -489,7 +489,7 @@ namespace AppWTM
                 string successScript = @"
                                     Swal.fire({
                                         title: 'Éxito',
-                                        text: 'Rango de fechas aplicado correctamente',
+                                        text: 'El rango de fechas se aplicó correctamente.',
                                         icon: 'success'
                                     }).then(function() {
                                         $('#customRangeModal').modal('hide');
@@ -605,16 +605,17 @@ namespace AppWTM
                         Response.AddHeader("Content-Disposition", $"attachment; filename={fileName}");
                         Response.BinaryWrite(ms.ToArray());
                         Response.Flush();
-                        Response.End();
+                        HttpContext.Current.ApplicationInstance.CompleteRequest();
+
                     }
                 }
             }
             catch (Exception ex)
             {
                 Response.Clear();
-                Response.ContentType = "text/plain";
+                Response.ContentType = "text/plain";  //en  en navegador de firefox me salta una exepcion aqui me marca un error  pero en edge no 
                 Response.Write("Error al generar el archivo: " + ex.Message);
-                Response.End();
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
             }
         }
 
