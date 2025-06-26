@@ -36,13 +36,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <asp:Panel ID="pnlLogin" runat="server"  DefaultButton="btnIngresar">
-                        <div class="contenedor-input">
+                        <div class="contenedor-input ajuste-titulo">
                             <label>
                                 Correo Electrónico <span class="req">*</span>
                             </label>
                             <asp:TextBox ID="txtEmailU" runat="server" CssClass="form-input"></asp:TextBox>
                         </div>
-                        <div class="contenedor-input">
+                        <div class="contenedor-input ajuste-titulo">
                             <label>
                                 Contraseña <span class="req">*</span>
                             </label>

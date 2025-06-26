@@ -528,7 +528,7 @@
 /* Encabezado del modal */
 .modal-header {
     padding: 0.75rem 1.5rem; /* ALTURA REDUCIDA */
-    background: linear-gradient(135deg, #0f1d60 0%, #1e3a8a 100%);
+    background: linear-gradient(135deg, #801250 0%, #b03060 100%);
     color: #ffffff;
     border-bottom: none;
     position: relative;

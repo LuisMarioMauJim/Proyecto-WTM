@@ -178,9 +178,22 @@
 
 #cancelados-tab:hover, #cancelados-tab.active {
   background: linear-gradient(135deg, #c82333, var(--danger-red));
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+ /* transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);*/
 }
+/* Prioridad */
+#prioridad-tab {
+  background: linear-gradient(135deg, #a255c6, #8e3bb2);
+  color: var(--primary-white);
+  box-shadow: 0 4px 15px rgba(162, 85, 198, 0.3);
+}
+
+#prioridad-tab:hover, #prioridad-tab.active {
+  background: linear-gradient(135deg, #8e3bb2, #a255c6);
+ /* transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(162, 85, 198, 0.4);*/
+}
+
 
 /* Cards de tickets */
 .card {
@@ -320,7 +333,7 @@
 }
 
 .modal-header {
-  background: linear-gradient(135deg, var(--primary-blue), #1a2a7a);
+   background: linear-gradient(135deg, #801250 0%, #b03060 100%);
   color: var(--primary-white);
   border: none;
   padding: 1.5rem 2rem;
@@ -452,6 +465,13 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link.active {
+  transform: translateY(-15px) !important;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.35) !important;
+}
+
+
 
 /* Indicadores de estado visual */
 .badge-status-indicator {

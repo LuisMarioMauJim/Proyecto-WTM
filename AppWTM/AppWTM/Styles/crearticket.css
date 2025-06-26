@@ -342,12 +342,12 @@ body {
 }
 
 .modal-header {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, #1a2980 100%);
+    background: linear-gradient(135deg, #801250 0%, #b03060 100%);
     color: var(--white);
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
     padding: 25px 35px;
     border-bottom: none;
 }
+
 
     .modal-header .modal-title {
         font-weight: 700;

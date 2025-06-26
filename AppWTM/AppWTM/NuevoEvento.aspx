@@ -2,7 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
    
-    <!-- SweetAlert2 CDN -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -127,7 +129,7 @@
 
 /* Formulario en dos columnas */
 .form-container {
-    max-width: 900px;
+    max-width: 680px;
     margin: auto;
     padding: 30px;
     border: 2px solid #0f1d60;
@@ -250,7 +252,7 @@
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 15px;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -265,8 +267,8 @@
 
 .btn-group {
     text-align: center;
-    margin-top: 30px;
-    padding-top: 20px;
+    margin-top: 10px;
+    padding-top: 5px;
     border-top: 2px solid #f0f0f0;
 }
 
@@ -376,6 +378,11 @@
     border-radius: 5px;
     border-left: 4px solid #801250;
 }
+.calendar-cell.hoy {
+            background-color: #f8f865 !important;
+            border: none !important;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
     </style>
 
     <div class="calendar-container">
@@ -402,7 +409,6 @@
         <asp:Literal ID="litCalendario" runat="server"></asp:Literal>
     </div>
 
-    <!-- Modal para Agregar Evento -->
    <!-- Modal para Agregar Evento -->
 <div id="modalAgregarEvento" class="modal">
     <div class="form-container">
@@ -431,12 +437,12 @@
                 <asp:TextBox ID="txtFin" runat="server" TextMode="DateTimeLocal" CssClass="form-control" required></asp:TextBox>
             </div>
 
-            <div class="form-group full-width">
+            <div class="form-group">
                 <label for="txtDescripcion" class="form-label">Descripción</label>
                 <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="4" CssClass="form-control" placeholder="Descripción del evento..."></asp:TextBox>
             </div>
 
-            <div class="form-group full-width">
+            <div class="form-group">
                 <div class="form-check">
                     <asp:CheckBox ID="chkTodoDia" runat="server" Text=" Todo el día" />
                 </div>
@@ -476,12 +482,12 @@
                 <input type="datetime-local" id="editFin" class="form-control" />
             </div>
 
-            <div class="form-group full-width">
+            <div class="form-group">
                 <label class="form-label">Descripción</label>
                 <textarea id="editDescripcion" class="form-control" rows="4" placeholder="Descripción del evento..."></textarea>
             </div>
 
-            <div class="form-group full-width">
+            <div class="form-group">
                 <div class="form-check">
                     <input type="checkbox" id="editTodoDia" /> 
                     <label for="editTodoDia">Todo el día</label>
