@@ -126,7 +126,7 @@ namespace AppWTM
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
-            if (Session["UsuarioLog"] != null)
+            if (Session["UsuarioLog"] != null && txtDescripcion.Text != "" && txtTitulo.Text != "")
             {
                 CUsuario usuario = (CUsuario)Session["UsuarioLog"];
                 CTickets ticket = new CTickets
@@ -145,7 +145,10 @@ namespace AppWTM
                     ScriptManager.RegisterStartupScript(this, GetType(), "TicketEnviado", "Swal.fire({ title: 'Ticket Enviado', text: 'Tu solicitud ha sido enviada exitosamente', icon: 'success', confirmButtonText: 'Aceptar' });", true);
                 }
             }
-            ;
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "SweetAlertError", "Swal.fire('Error', 'Ingresa todos los datos', 'error');", true);
+            }
 
         }
 
@@ -156,7 +159,6 @@ namespace AppWTM
             ddlArea.SelectedIndex = 0;
             //ddlPrioridad.SelectedIndex = 0;
             txtDescripcion.Text = "";
-
             // Un mensaje de cancelación, seria mas el de confirmacion pero ando viendo si necesito la base o no
             ScriptManager.RegisterStartupScript(this, GetType(), "TicketCancelado", "Swal.fire({ title: 'Ticket Cancelado', text: 'Has cancelado la creación del ticket.', icon: 'info', confirmButtonText: 'Aceptar' });", true);
 

@@ -176,12 +176,12 @@
 .modal-content {
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(15, 29, 96, 0.2);
-    border: 2px solid #0f1d60;
+    border: 2px solid #801250;
 }
 
 /* Encabezado del modal */
 .modal-header {
-    background-color: #0f1d60;
+    background-color: #801250;
     color: #ffffff;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;

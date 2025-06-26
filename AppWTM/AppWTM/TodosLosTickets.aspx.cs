@@ -386,11 +386,22 @@ namespace AppWTM
                 return;
             }
 
+
             // Validar extensión
             var ext = System.IO.Path.GetExtension(fuEvidencia.FileName).ToLower();
             if (ext != ".pdf")
             {
                 lblFileMessage.Text = "Solo se permiten archivos PDF.";
+                return;
+            }
+
+            // Tamaño máximo permitido (20 MB)
+            int maxSizeInBytes = 12 * 1024 * 1024;
+
+            if (fuEvidencia.PostedFile.ContentLength > maxSizeInBytes)
+            {
+                lblFileMessage.Text = "El archivo excede el tamaño máximo permitido (12 MB).";
+                lblFileMessage.Visible = true;
                 return;
             }
 

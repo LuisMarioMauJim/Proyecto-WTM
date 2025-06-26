@@ -704,7 +704,7 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content border-0 shadow">
                         <!-- Encabezado con color primary -->
-                        <div class="modal-header py-2 text-white" style="background-color: var(--color-primary); border-bottom: 2px solid var(--color-accent);">
+                      <div class="modal-header py-2 text-white" style="background-color: #801250; border-bottom: 2px solid var(--color-accent);">
                             <h6 class="modal-title mb-0" id="customRangeModalLabel">
                                 <i class="bi bi-calendar-range me-2"></i>Seleccionar rango
                             </h6>
@@ -1131,11 +1131,6 @@
 
             return tmpCanvas.toDataURL("image/png");
         }
-
-
-
-
-
 
 
     </script>
