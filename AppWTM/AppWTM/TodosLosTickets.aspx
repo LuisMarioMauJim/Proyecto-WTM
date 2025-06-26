@@ -1036,17 +1036,38 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const fileInput = document.getElementById('<%= fuEvidencia.ClientID %>');
-    const uploadButton = document.getElementById('<%= btnGuardarEvidencia.ClientID %>');
+        const uploadButton = document.getElementById('<%= btnGuardarEvidencia.ClientID %>');
+        const lblMensaje = document.getElementById("<%= lblFileMessage.ClientID %>");
 
-      if (fileInput && uploadButton) {
-          fileInput.addEventListener("change", function () {
-              if (fileInput.files.length > 0) {
-                  uploadButton.classList.remove("d-none");
-              } else {
-                  uploadButton.classList.add("d-none");
-              }
-          });
-      }
-  });
+        if (fileInput && uploadButton) {
+            // Mostrar u ocultar el botón de subir cuando se selecciona un archivo
+            fileInput.addEventListener("change", function () {
+                if (fileInput.files.length > 0) {
+                    uploadButton.classList.remove("d-none");
+                } else {
+                    uploadButton.classList.add("d-none");
+                }
+            });
+
+            // Validación del tamaño del archivo antes de subir
+            uploadButton.addEventListener("click", function (e) {
+                lblMensaje.classList.add("d-none"); // Oculta el mensaje si ya estaba visible
+                lblMensaje.textContent = "";
+
+                if (fileInput.files.length > 0) {
+                    const fileSize = fileInput.files[0].size;
+                    const maxSize = 12 * 1024 * 1024; // 12 MB
+
+                    if (fileSize > maxSize) {
+                        e.preventDefault();
+                        lblMensaje.className = "alert alert-warning mt-2 p-2";
+                        lblMensaje.textContent = "El archivo es demasiado grande. Máximo permitido: 12 MB.";
+                        lblMensaje.style.display = "block";
+                        return false;
+                    }
+                }
+            });
+        }
+    });
 </script>
 </asp:Content>

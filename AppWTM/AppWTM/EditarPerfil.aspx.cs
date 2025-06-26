@@ -14,13 +14,11 @@ namespace AppWTM
 {
     public partial class EditarPerfil : System.Web.UI.Page
     {
-        // Campo de clase
         WUsuario wUsuario;
         CUsuario cUsuario = new CUsuario();
         int pkUser;
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Inicializa el campo de clase, no una nueva variable local
             wUsuario = new WUsuario();
             
             if (!IsPostBack) // Ejecutar solo en la primera carga
@@ -81,12 +79,12 @@ namespace AppWTM
             if (!string.IsNullOrWhiteSpace(txtNewPassword.Text))
             {
                 // 2.1 Verifica contraseña actual
-                //if (!PasswordHelper.VerifyHash(txtOldPassword.Text, currentSalt, currentHash))
-                //{
-                //    ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
-                //       "Swal.fire('Error','La contraseña actual es incorrecta.','error');", true);
-                //    return;
-                //}
+                if (!PasswordHelper.VerifyHash(txtOldPassword.Text, currentSalt, currentHash))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
+                       "Swal.fire('Error','La contraseña actual es incorrecta.','error');", true);
+                    return;
+                }
                 // 2.2 Verifica coincidencia nueva/confirm
                 if (txtNewPassword.Text != txtConfirmPassword.Text)
                 {
@@ -100,6 +98,13 @@ namespace AppWTM
                 cUsuario.PasswordHash = newHash;
                 cUsuario.Salt = newSalt;
             }
+            else
+            {
+                // Si no cambia la contraseña, usa los valores actuales
+                cUsuario.PasswordHash = currentHash;
+                cUsuario.Salt = currentSalt;
+            }
+
             // 3) Llena el resto de campos
             cUsuario.pkUsuario = userId;
             cUsuario.nombre = txtNombre.Text;
@@ -108,7 +113,7 @@ namespace AppWTM
             cUsuario.telefono = txtTelefono.Text;
             cUsuario.fkArea = int.Parse(drpArea.SelectedValue);
             cUsuario.status = drpEstado.SelectedValue;
-            //cUsuario.fkRol = drpRol.SelectedIndex;
+            cUsuario.fkRol = ((CUsuario)Session["UsuarioLog"]).fkRol;
 
             // 4) Llama a la capa de datos
             if (wUsuario.UpdateUsuario(cUsuario))

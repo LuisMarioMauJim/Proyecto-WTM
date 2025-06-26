@@ -66,7 +66,7 @@ namespace AppWTM
                 return;
             }
 
-            // 4) Si llegas aquí, todo OK: cargas datos en sesión y rediriges
+            // 4) cargas datos en sesión y rediriges
             var usuario = new CUsuario
             {
                 pkUsuario = (int)row["ID"],
